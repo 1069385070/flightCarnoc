@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heyang.ssm.dao.UserDao">
+    <insert id="addUser" parameterType="User">
+        INSERT INTO T_USER VALUES(NULL,#{userName},#{userPassword})
+    </insert>
+
+
+    <delete id="deleteUser" parameterType="integer">
+        DELETE FROM T_USER WHERE USER_ID = #{userId}
+    </delete>
+
+
+    <select id="getAllUser" resultType="User">
+        SELECT USER_ID,USER_NAME FROM T_USER
+    </select>
+
+
+
+
+
+
+    <select id="getUserById" parameterType="integer" resultType="User" >
+        SELECT USER_ID,USER_NAME FROM T_USER WHERE USER_ID=#{userId}
+    </select>
+
+
+
+
+
+
+    <update id="updateUser" parameterType="User">
+        <if test="userPassword!=''">
+            UPDATE T_USER SET USER_NAME=#{userName},USER_PASSWORD=#{userPassword} WHERE USER_ID=#{userId}
+        </if>
+
+        <if test="userPassword==''">
+            UPDATE T_USER SET USER_NAME=#{userName} WHERE USER_ID=#{userId}
+        </if>
+    </update>
+
+
+    <select id="getUser" parameterType="User" resultType="User">
+        SELECT USER_ID,USER_NAME FROM T_USER WHERE 1=1
+        <if test="userId!='' and userName==''">
+            AND USER_ID=#{userId}
+        </if>
+        <if test="userName!='' and userId=='' ">
+            AND USER_NAME LIKE "%"#{userName}"%"
+        </if>
+        <if test="userId!='' and userName!='' ">
+            AND USER_ID=#{userId} AND USER_NAME LIKE "%"#{userName}"%"
+        </if>
+    </select>
+
+
+
+
+
+    <!--<resultMap id="userMapper" type="com.heyang.ssm.pojo.User">-->
+        <!--<id property="userId" column="USER_ID" />-->
+        <!--<result property="userName" column="USER_NAME" />-->
+    <!--</resultMap>-->
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--自动扫描：自动扫描com.heyang.ssm包下所有类的注解-->
+    <context:component-scan base-package="com.heyang.ssm"/>
+
+
+    <!--导入redis配置-->
+    <!--<import resource="spring-redis.xml" />-->
+
+    <!--加载db.properties-->
+    <context:property-placeholder location="classpath:db.properties,classpath:redis.properties"></context:property-placeholder>
+
+
+
+    <!--配置数据源 从c3p0-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${drivers}"></property>
+        <property name="jdbcUrl" value="${url}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="initialPoolSize" value="${initPoolSize}"></property>
+        <property name="maxPoolSize" value="${maxPoolSizes}"></property>
+    </bean>
+
+    <!--配置SqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--加载数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--加载MyBatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis-Config.xml"></property>
+        <!--加载所有映射文件-->
+        <property name="mapperLocations" value="classpath:com/heyang/ssm/mapper/*.xml"></property>
+        <!--typeAliasesPackage对应实体类所在的包，这个时候会自动取包名作为别名-->
+        <property name="typeAliasesPackage" value="com.heyang.ssm.pojo"></property>
+    </bean>
+
+
+    <!--配置Dao层：spring注入这个bean-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--将sqlSessionFactory注入com.zking.dao包的类中，dao包中的类直接使用sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <property name="basePackage" value="com.heyang.ssm.dao"></property>
+    </bean>
+
+
+    <!-- 事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+
+    <!--redis配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"></property>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"></property>
+    </bean>
+
+    <!--配置redis数据源-->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg ref="jedisPoolConfig"></constructor-arg>
+        <constructor-arg name="host" value="${redis.hostName}"></constructor-arg>
+        <constructor-arg name="port" value="${redis.port}"></constructor-arg>
+    </bean>
+
+</beans>
