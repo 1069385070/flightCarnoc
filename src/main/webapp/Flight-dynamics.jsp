@@ -45,7 +45,7 @@
                         </li>
                         <li>
                             <label class="l_f">机号：</label>
-                            <input name="" type="text"  class="text_add" placeholder="输入航班号"  style=" width:190px"/>
+                            <input name="" type="text"  class="text_add" placeholder="输入机号"  style=" width:190px"/>
                         </li>
                         <li>
                             <label class="l_f">时间：</label>
