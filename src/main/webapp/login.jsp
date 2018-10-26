@@ -21,18 +21,21 @@
                     <td width="989"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
                             <td height="650" background="images/loginbg.png" style="text-align: center;">&nbsp;
-                                <form action="" method="post">
+                                <form action="/login.do" method="post">
                                     <div align="center">
                                         <span class="STYLE1">用户:</span>
-                                        <input name="textfield" type="text" size="15" style="height:17px; border:solid 1px #bbbbbb" placeholder="请输入用户名">
+                                        <input name="username" type="text" size="15" style="height:17px; border:solid 1px #bbbbbb" placeholder="请输入用户名">
                                     </div>
                                     <br />
                                     <div align="center">
                                         <span class="STYLE1">密码:</span>
-                                        <input name="textfield2" type="password" size="15" style="height:17px; border:solid 1px #bbbbbb" placeholder="请输入密码">
+                                        <input name="password" type="password" size="15" style="height:17px; border:solid 1px #bbbbbb" placeholder="请输入密码">
                                     </div>
                                     <br />
-                                    <div align="center"><img src="images/dl.gif" width="39" height="18"></div>
+                                    <div align="center">
+                                        <%--<img src="images/dl.gif" width="39" height="18">--%>
+                                        <input type="submit" value="登录"/>
+                                    </div>
                                 </form>
                             </td>
                         </tr>
