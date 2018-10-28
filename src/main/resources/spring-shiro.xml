@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+    <!-- 配置缓存管理器 -->
+    <!-- 用户授权信息Cache -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        &lt;!&ndash; 指定 ehcache 的配置文件，下面会给到 &ndash;&gt;
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+    </bean>-->
+
+    <!-- realm自定义认证授权类 -->
+    <!-- 配置进行授权和认证的 Realm，要新增一个java类来实现，下面会有，class=包名.类名，init-methood是初始化的方法 -->
+    <!--init-method="setCredentialMatcher"-->
+    <bean id="myRealm" class="com.carnoc.flight.userManager.shiro.MyRealm">
+        <property name="cacheManager" ref="cacheManager"></property>
+    </bean>
+
+    <!-- shiro安全管理器 shiro核心-->
+    <!-- 配置 Shiro 的 SecurityManager Bean. -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--引入缓存管理器-->
+        <property name="cacheManager" ref="cacheManager"></property>
+        <property name="realm" ref="myRealm"></property>
+    </bean>
+
+    <!-- 配置 Bean 后置处理器: 会自动的调用和 Spring 整合后各个组件的生命周期方法. -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+
+    <!-- 配置 ShiroFilter bean: 该 bean 的 id 必须和 web.xml 文件中配置的 shiro filter 的 name 一致  -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- 装配 securityManager -->
+        <property name="securityManager" ref="securityManager"></property>
+        <!-- 配置登陆页面 -->
+        <property name="loginUrl" value="/login.jsp"></property>
+        <!-- 登陆成功后的一面 -->
+        <property name="successUrl" value="/index.jsp"></property>
+        <!--当没有权限的时候，跳转到这个url-->
+        <property name="unauthorizedUrl" value="/login.jsp" />
+
+        <!--过滤  -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 配置登出: 使用 logout 过滤器 -->
+                <!--/logout = logout-->
+                <!--/* = anon-->
+                <!--/user.jsp = roles[user]-->
+                <!--/admin.jsp = roles[admin]-->
+                <!--/** = authc-->
+                /login.jsp*=anon
+                /index.jsp*=authc
+                /user.jsp = roles[user]
+                /admin.jsp = roles[admin]
+            </value>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+</beans>
