@@ -1,74 +1,72 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018/10/26
-  Time: 16:06
+  Date: 2018/10/28
+  Time: 16:41
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="assets/css/ace.min.css" />
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-    <![endif]-->
-    <script src="js/jquery-1.9.1.min.js"></script>  <script src="assets/dist/echarts.js"></script>
-    <script src="js/lrtk.js" type="text/javascript" ></script>
-    <title>航保资源统计</title>
+    <title>各航空公司航班延误统计</title>
 </head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="assets/css/ace.min.css" />
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+<![endif]-->
+<script src="js/jquery-1.9.1.min.js"></script>  <script src="assets/dist/echarts.js"></script>
+<script src="js/lrtk.js" type="text/javascript" ></script>
 <body>
 <div class=" clearfix" id="advertising">
     <%@include file="statistics.jsp"%>
     <div class="Ads_list">
-    <form class="search_style">
-        <ul class="search_content clearfix" >
-            <li>
-                <label class="l_f">起始时间：</label>
-                <input name="" type="date"   placeholder=" "  >
-            </li>
-            <li>
-                <label class="l_f">结束时间：</label>
-                <input class=" "  type="date"   style=" margin-left:10px;">
-            </li>
+        <form class="search_style">
+            <ul class="search_content clearfix" >
+                <li>
+                    <label class="l_f">起始时间：</label>
+                    <input name="" type="date"   placeholder=" "  >
+                </li>
+                <li>
+                    <label class="l_f">结束时间：</label>
+                    <input class=" "  type="date"   style=" margin-left:10px;">
+                </li>
 
-            <li style="width:90px;">
-                <button type="button" class="btn_search"><i class="fa fa-search"></i>查询</button>
-            </li>
-        </ul>
-    </form>
-    <form class="search_style">
-        <ul class="search_content clearfix">
+                <li style="width:90px;">
+                    <button type="button" class="btn_search"><i class="fa fa-search"></i>查询</button>
+                </li>
+            </ul>
+        </form>
+        <form class="search_style">
+            <ul class="search_content clearfix">
 
-            <li>
-                <label class="l_f">国内/外航班：</label>
-                <select name="" >
-                    <option>国内航班</option>
-                    <option>国外航班</option>
-                </select>
-            </li>
-            <li>
-                <label class="l_f">进/出港：</label>
-                <select name="" style="width:90px;">
-                    <option>进港</option>
-                    <option>出港</option>
-                </select>
-            </li>
-        </ul>
-    </form>
-    <div class="">
-        <div id="main1" style="height:300px; overflow:hidden; width:50%; overflow:auto; float:left;" ></div>
-        <div id="main2" style="height:300px; overflow:hidden; width:50%; overflow:auto; float:left;" ></div>
+                <li>
+                    <label class="l_f">国内/外航班：</label>
+                    <select name="" >
+                        <option>国内航班</option>
+                        <option>国外航班</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="l_f">进/出港：</label>
+                    <select name="" style="width:90px;">
+                        <option>进港</option>
+                        <option>出港</option>
+                    </select>
+                </li>
+            </ul>
+        </form>
+        <div class="">
+            <div id="main1" style="height:300px; overflow:hidden; width:50%; overflow:auto; float:left;" ></div>
+            <div id="main2" style="height:300px; overflow:hidden; width:50%; overflow:auto; float:left;" ></div>
+        </div>
     </div>
-</div>
 </div>
 </div>
 
@@ -216,3 +214,5 @@
     );
 
 </script>
+</body>
+</html>

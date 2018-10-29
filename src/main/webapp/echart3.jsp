@@ -27,11 +27,11 @@
 
                 <li>
                     <label class="l_f">开始时间：</label>
-                    <input class=" "  type="text"   style=" margin-left:10px;width:120px">
+                    <input class=" "  type="date"   style=" margin-left:10px;width:120px">
                 </li>
                 <li>
                     <label class="l_f">结束时间：</label>
-                    <input class=" "  type="text"   style=" margin-left:10px;width:120px">
+                    <input class=" "  type="date"   style=" margin-left:10px;width:120px">
                 </li>
                 <li style="width:70px; margin-right:0 !important;">
                     <button type="button" class="btn_search" onclick="search_flight3()"><i class="icon-search"></i>查询</button>

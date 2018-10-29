@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
-  Date: 2018/10/26
-  Time: 16:06
+  Date: 2018/10/28
+  Time: 16:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
+    <title>靠桥</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -22,12 +22,9 @@
     <![endif]-->
     <script src="js/jquery-1.9.1.min.js"></script>  <script src="assets/dist/echarts.js"></script>
     <script src="js/lrtk.js" type="text/javascript" ></script>
-    <title>航保资源统计</title>
-</head>
-
 <body>
 <div class=" clearfix" id="advertising">
-    <%@include file="statistics.jsp"%>
+                <%@include file="statistics.jsp"%>
     <div class="Ads_list">
     <form class="search_style">
         <ul class="search_content clearfix" >
@@ -216,3 +213,5 @@
     );
 
 </script>
+</body>
+</html>

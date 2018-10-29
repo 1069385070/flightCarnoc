@@ -26,11 +26,11 @@
             <ul class="search_content clearfix" >
                 <li>
                     <label class="l_f">起始时间：</label>
-                    <input name="" type="text"   placeholder=" "  >
+                    <input name="" type="date"   placeholder=" "  >
                 </li>
                 <li>
                     <label class="l_f">结束时间：</label>
-                    <input class=" "  type="text"   style=" margin-left:10px;">
+                    <input class=" "  type="date"   style=" margin-left:10px;">
                 </li>
 
 
