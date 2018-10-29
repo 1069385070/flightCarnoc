@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -41,15 +42,15 @@
                     <ul class="search_content clearfix">
                         <li>
                             <label class="l_f">航班号：</label>
-                            <input name="" type="text"  class="text_add" placeholder="输入航班号"  style=" width:190px"/>
+                            <input name="" id="flightNo" type="text"  class="text_add" placeholder="输入航班号"  style=" width:190px"/>
                         </li>
                         <li>
                             <label class="l_f">机号：</label>
-                            <input name="" type="text"  class="text_add" placeholder="输入机号"  style=" width:190px"/>
+                            <input name="" id="no" type="text"  class="text_add" placeholder="输入机号"  style=" width:190px"/>
                         </li>
                         <li>
                             <label class="l_f">时间：</label>
-                            <input class="inline laydate-icon" id="start" style=" margin-left:10px;">
+                            <input  id="planTakeTime" type="date" class="inline laydate-icon" id="start" style=" margin-left:10px;">
                         </li>
                         <li>
                             <button type="button" class="btn_search" onclick="search_flight()"><i class="icon-search"  ></i>查询</button>
@@ -60,41 +61,37 @@
                     <ul class="search_content clearfix">
                         <li>
                             <label class="l_f">所有航班：</label>
-                            <select name="" style=" width:110px">
-                                <option>---所有---</option>
-                                <option>始发航班--</option>
+                            <select id="isFirst" name="" style=" width:110px">
+                                <option value="否">---所有---</option>
+                                <option value="是">始发航班</option>
                             </select>
                         </li>
                         <li>
                             <label class="l_f">进出港：</label>
-                            <select name="" style=" width:110px">
-                                <option>---所有---</option>
-                                <option>进港</option>
-                                </option>
-                                <option>出港</option>
+                            <select id="inOut" name="" style=" width:110px">
+                                <option value="所有">---所有---</option>
+                                <option value="进">进港</option>
+                                <option value="出">出港</option>
                             </select>
                         </li>
                         <li>
                             <label class="l_f">航空公司：</label>
-                            <select name="" style=" width:110px">
-                                <option>---航空公司---</option>
-                                <option>东航</option>
-                                <option>南航</option>
-                                <option>江西南昌航空公司</option>
+                            <select id="airlineId"  name="" style=" width:110px">
+                                <option VALUE="0">---航空公司---</option>
                             </select>
                         </li>
                         <li>
                             <label class="l_f">国内/外航班：</label>
-                            <select name="" style=" width:110px">
-                                <option>---所有---</option>
+                            <select id="nature" name="" style=" width:110px">
+                                <option value="所有">---所有---</option>
                                 <option>国内航班</option>
                                 <option>国外航班</option>
                             </select>
                         </li>
                         <li>
                             <label class="l_f">航班状态：</label>
-                            <select name="" style=" width:110px">
-                                <option>---所有---</option>
+                            <select id="flightStatus" name="" style=" width:110px">
+                                <option value="所有">---所有---</option>
                                 <option>延误</option>
                                 <option>正常</option>
                                 <option>取消</option>
@@ -127,207 +124,35 @@
                         <th width="100">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2014-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2014-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2014-7-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a> </td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2015-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>SD</td>
-                        <td> T123</td>
-                        <td>正班</td>
-                        <td>进</td>
-                        <td>F34</td>
-                        <td class="text-l">波音</td>
-                        <td>国内机型</td>
-                        <td>南昌机</td>
-                        <td>2016-6-11 11:11</td>
-                        <td>2014-6-11 14:21</td>
-                        <td>天河机场</td>
-                        <td class="td-status"><span class="label label-success radius">正常</span></td>
-                        <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a></td>
-                    </tr>
+
+                    <tbody id="context">
+                    <!--航班动态信息-->
+                    <c:forEach items="${flightRecordList}" var="flightRecord">
+                        <tr>
+                            <td><label>
+                                <input type="checkbox" class="ace">
+                                <span class="lbl"></span></label></td>
+                            <td>${flightRecord.airCode}</td>
+                            <td> ${flightRecord.flightNo}</td>
+                            <td>${flightRecord.flightMission}</td>
+                            <td>${flightRecord.inOut}</td>
+                            <td>${flightRecord.no}</td>
+                            <td class="text-l">${flightRecord.attribute}</td>
+                            <td>${flightRecord.nature}</td>
+                            <td>${flightRecord.airportStart}</td>
+                            <td>${flightRecord.planTakeTime}</td>
+                            <td>${flightRecord.planLandTime}</td>
+                            <td>${flightRecord.airportEnd}</td>
+                            <td class="td-status"><span class="label label-success radius">${flightRecord.flightStatus}</span></td>
+                            <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
+
+
                 </table>
+
+                <!--分页-->
                 <div style=" float:right; margin-right:20px;">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -341,6 +166,7 @@
                         </ul>
                     </nav>
                 </div>
+
             </div>
         </div>
     </div>
@@ -586,11 +412,93 @@
 </form>
 </body>
 </html>
-<script>
+<script src="js/jquery-1.7.2.min.js"></script>
+<script >
     /*查询*/
     function search_flight(){
+        $.ajax({
+            type:"post",
+            url:"/getFlightRecordByCondition.do",
+            data:{flightNo:$('#flightNo').val(),no:$('#no').val(),planTakeTime:$('#planTakeTime').val(),isFirst:$('#isFirst').val(),inOut:$('#inOut').val(),airlineId:$('#airlineId').val(),nature:$('#nature').val(),flightStatus:$('#flightStatus').val()},
+            success: function(data){
+                var jsonObectData = JSON.parse(data);
+                console.log(jsonObectData);
+                var html="";
+                $.each(jsonObectData, function(commentIndex, comment){
+                    html +=' <tr>\n' +
+                        '<td><label>\n' +
+                        '<input type="checkbox" class="ace">\n' +
+                        '<span class="lbl"></span></label></td>\n' +
+                        '<td>'+comment.airCode+'</td>\n' +
+                        '<td>'+comment.flightNo+'</td>\n' +
+                        ' <td>'+comment.task+'</td>\n' +
+                        '<td>'+comment.inOut+'</td>\n' +
+                        '<td>'+comment.no+'</td>\n' +
+                        '<td class="text-l">'+comment.attribute+'</td>\n' +
+                        '<td>'+comment.nature+'</td>\n' +
+                        '<td>'+comment.airportStart+'</td>\n' +
+                        '<td>'+comment.planTakeTime+'</td>\n' +
+                        '<td>'+comment.planLandTime+'</td>\n' +
+                        '<td>'+comment.airportEnd+'</td>\n' +
+                        '<td class="td-status"><span class="label label-success radius">'+comment.flightStatus+'</span></td>\n' +
+                        '<td class="td-manage"><a title="编辑" onclick="member_edit(\'550\')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
+                        '</tr>';
+                });
+                $('#context').html(html);
+            }
+        });
+    }
 
-        $("#search_form").submit();
+
+    //获得航空公司基础数据
+    function getAirCompanyBasicData(){
+        $.ajax({
+            type:"post",
+            url:"/getAirCompanyBasicData.do",
+            success: function(data){
+                var jsonObectData = JSON.parse(data);
+                var html="<option VALUE='0'>--航空公司--</option>";
+                $.each(jsonObectData, function(commentIndex, comment){
+                    html+="<option VALUE='"+comment.id+"'>"+comment.name+"</option>";
+                });
+                $('#airlineId').html(html);
+            }
+        });
+    }
+
+
+    //初始化数据
+    window.onload =function() {
+        $.ajax({
+            type:"post",
+            url:"/getFlightRecord.do",
+            success: function(data){
+                var jsonObectData = JSON.parse(data);
+                var html="";
+                $.each(jsonObectData, function(commentIndex, comment){
+                    html +=' <tr>\n' +
+                        '<td><label>\n' +
+                        '<input type="checkbox" class="ace">\n' +
+                        '<span class="lbl"></span></label></td>\n' +
+                        '<td>'+comment.airCode+'</td>\n' +
+                        '<td>'+comment.flightNo+'</td>\n' +
+                        ' <td>'+comment.task+'</td>\n' +
+                        '<td>'+comment.inOut+'</td>\n' +
+                        '<td>'+comment.no+'</td>\n' +
+                        '<td class="text-l">'+comment.attribute+'</td>\n' +
+                        '<td>'+comment.nature+'</td>\n' +
+                        '<td>'+comment.airportStart+'</td>\n' +
+                        '<td>'+comment.planTakeTime+'</td>\n' +
+                        '<td>'+comment.planLandTime+'</td>\n' +
+                        '<td>'+comment.airportEnd+'</td>\n' +
+                        '<td class="td-status"><span class="label label-success radius">'+comment.flightStatus+'</span></td>\n' +
+                        '<td class="td-manage"><a title="编辑" onclick="member_edit(\'550\')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
+                        '</tr>';
+                });
+                $('#context').html(html);
+            }
+        });
+        getAirCompanyBasicData();
     }
 
     /*-编辑*/

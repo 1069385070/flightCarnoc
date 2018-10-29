@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carnoc.flight.flightInformation.dao.FlightRecordDao">
+
+    <!--获得航班动态数据-->
+    <select id="getFlightRecord" parameterType="FlightRecord" resultType="FlightRecord">
+        select * from f_flight_record where 1=1
+        <if test="flightNo!=null and flightNo!=''">
+          and FLIGHT_NO = #{flightNo}
+        </if>
+        <if test="no!=null and no!=''">
+            and NO = #{no}
+        </if>
+        <if test="isFirst !=null and isFirst !='否'">
+            and ISFIRST = #{isFirst}
+        </if>
+        <if test="inOut!=null and inOut !='所有' ">
+            and IN_OUT = #{inOut}
+        </if>
+
+        <if test="airlineId!=0">
+            and AIRLINE_ID = #{airlineId}
+        </if>
+
+      <if test="nature!=null and nature !='所有' ">
+          and NATURE = #{nature}
+      </if>
+      <if test="flightStatus!=null and flightStatus !='所有' ">
+          and FLIGHT_STATUS = #{flightStatus}
+      </if>
+    </select>
+
+
+
+</mapper>

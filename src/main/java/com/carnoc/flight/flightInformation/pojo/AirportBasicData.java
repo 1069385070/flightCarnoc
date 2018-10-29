@@ -1,4 +1,4 @@
-package com.carnoc.flight.statisticAnalysis.pojo;
+package com.carnoc.flight.flightInformation.pojo;
 
 import java.io.Serializable;
 
