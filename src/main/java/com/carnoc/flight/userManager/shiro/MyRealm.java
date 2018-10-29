@@ -1,7 +1,9 @@
 package com.carnoc.flight.userManager.shiro;
 
 import com.carnoc.flight.userManager.pojo.Admin;
+import com.carnoc.flight.userManager.pojo.Menu;
 import com.carnoc.flight.userManager.service.AdminService;
+import com.carnoc.flight.userManager.service.MenuService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
@@ -9,12 +11,15 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName: MyRealm
@@ -31,7 +36,8 @@ public class MyRealm extends AuthorizingRealm{
     private static Logger logger= LogManager.getLogger(MyRealm.class);
     @Resource
     private AdminService adminService;
-
+    @Resource
+    private MenuService menuService;
     String password;
     /**
      * @Author Administrator
@@ -42,8 +48,34 @@ public class MyRealm extends AuthorizingRealm{
      * @exception
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //获取登录的用户名
+        Admin admin= (Admin)principals.getPrimaryPrincipal();
+        System.out.println(admin);
+        logger.info("进来了授权");
+        List<String> la=new ArrayList<>();
+        List<Menu> menuList = menuService.selectMenuByAdminUsername(admin.getUsername());
+        for (Menu menu:menuList){
+            if(menu.getMenuCode()!=null){
+                la.add(menu.getMenuCode());
+            }
+        }
+        System.out.println(la);
+        simpleAuthorizationInfo.addStringPermissions(la);
+        if("admin".equals(admin.getUsername())){
+            //两个if根据判断赋予登录用户权限
+            //simpleAuthorizationInfo.addStringPermission("admin:create");
+            simpleAuthorizationInfo.addRole("admin");
+            System.out.println("admin账号");
+        }
+        if("user1".equals(admin.getUsername())){
+            simpleAuthorizationInfo.addRole("list");
+            System.out.println("list账号");
+        }
+        simpleAuthorizationInfo.addRole("user");
+        return simpleAuthorizationInfo;
+        //return null;
     }
     
     /**
@@ -85,6 +117,7 @@ public class MyRealm extends AuthorizingRealm{
 //        System.out.println(this.getName());
         SimpleAuthenticationInfo simpleAuthenticationInfo=new SimpleAuthenticationInfo(admin, password, this.getName());
         System.out.println(simpleAuthenticationInfo);
+        //User user = (User) SecurityUtils.getSubject().getPrincipal()
         return simpleAuthenticationInfo;
     }
 }

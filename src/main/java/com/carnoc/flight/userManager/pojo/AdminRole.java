@@ -14,18 +14,21 @@ import java.io.Serializable;
  */
 
 public class AdminRole implements Serializable {
-    private Integer id;         //用户组编号
+    private Integer id;         //用户组id
+    private String roleCode;    //用户组编号
     private String name ;       //'名称',
     private String menuId ;    //'权限控制',
     private String addTime;    //'添加时间',
+    private Integer roleState;  //用户组状态
 
-    public AdminRole(Integer id, String name, String menuId, String addTime) {
+    public AdminRole(Integer id, String roleCode, String name, String menuId, String addTime, Integer roleState) {
         this.id = id;
+        this.roleCode = roleCode;
         this.name = name;
         this.menuId = menuId;
         this.addTime = addTime;
+        this.roleState = roleState;
     }
-
     public AdminRole() {
     }
 
@@ -35,6 +38,14 @@ public class AdminRole implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 
     public String getName() {
@@ -61,13 +72,23 @@ public class AdminRole implements Serializable {
         this.addTime = addTime;
     }
 
+    public Integer getRoleState() {
+        return roleState;
+    }
+
+    public void setRoleState(Integer roleState) {
+        this.roleState = roleState;
+    }
+
     @Override
     public String toString() {
         return "AdminRole{" +
                 "id=" + id +
+                ", roleCode='" + roleCode + '\'' +
                 ", name='" + name + '\'' +
                 ", menuId='" + menuId + '\'' +
                 ", addTime='" + addTime + '\'' +
+                ", roleState=" + roleState +
                 '}';
     }
 }

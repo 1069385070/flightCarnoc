@@ -13,18 +13,18 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="assets/css/ace.min.css" />
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
 
     <!--  <link rel="stylesheet" href="font/css/font-awesome.min.css" />-->
 
     <script type="text/javascript">
-        window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+        window.jQuery || document.write("<script src='../assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
     </script>
     <script type="text/javascript">
-        if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+        if("ontouchend" in document) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
     </script>
     <!-- page specific plugin scripts -->
     <title>用户组信息查看</title>
@@ -149,7 +149,7 @@
 
     //返回操作
     function return_close(){
-        location.href="user-group.html";
+        location.href="user-group.jsp";
 
     }
 </script>

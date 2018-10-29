@@ -77,4 +77,18 @@
         <!--<constructor-arg name="port" value="${redis.port}"></constructor-arg>-->
     <!--</bean>-->
 
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+        <property name="messageConverters">
+            <ref bean="mappingJacksonHttpMessageConverter"></ref>
+        </property>
+    </bean>
+
+    <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value type="text/html;charset=UTF-8"></value>
+            </list>
+        </property>
+    </bean>-->
+
 </beans>
