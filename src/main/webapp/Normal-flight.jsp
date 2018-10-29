@@ -37,10 +37,10 @@
                 </div>
                 <div class="widget-body">
                     <ul class="b_P_Sort_list">
-                        <li><a  href="javascript:void(0)" name="echart1.html"  class="iframeurl" >1. 机场放行统计</a></li>
-                        <li> <a  href="javascript:void(0)" name="echart2.html"  class="iframeurl" >2. 航班延误统计</a></li>
-                        <li> <a  href="javascript:void(0)" name="echart3.html"  class="iframeurl" >3. 各航空公司机场放行统计</a></li>
-                        <li> <a  href="javascript:void(0)" name="echart4.html"  class="iframeurl" >4. 各航空公司航班延误统计</a></li>
+                        <li><a  href="javascript:void(0)" name="echart1.jsp"  class="iframeurl" >1. 机场放行统计</a></li>
+                        <li> <a  href="javascript:void(0)" name="echart2.jsp"  class="iframeurl" >2. 航班延误统计</a></li>
+                        <li> <a  href="javascript:void(0)" name="echart3.jsp"  class="iframeurl" >3. 各航空公司机场放行统计</a></li>
+                        <li> <a  href="javascript:void(0)" name="echart4.jsp"  class="iframeurl" >4. 各航空公司航班延误统计</a></li>
                     </ul>
                 </div>
             </div>

@@ -53,7 +53,8 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--将sqlSessionFactory注入com.zking.dao包的类中，dao包中的类直接使用sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-        <property name="basePackage" value="com.carnoc.flight.userManager.dao,com.carnoc.flight.statisticAnalysis.dao"></property>
+        <property name="basePackage" value="com.carnoc.flight.userManager.dao,com.carnoc.flight.statisticAnalysis.dao
+                                          ,com.carnoc.flight.flightInformation.dao"></property>
     </bean>
 
 
