@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口注册-->
+<mapper namespace="com.carnoc.flight.userManager.dao.AdminRoleDao">
+
+    <resultMap id="AdminRoleBase" type="com.carnoc.flight.userManager.pojo.AdminRole">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="menuId" column="menu_id"></result>
+        <result property="addTime" column="add_time"></result>
+        <result property="roleState" column="role_state"></result>
+        <result property="roleCode" column="role_code"></result>
+    </resultMap>
+
+    <!--查询所有的用户组-->
+    <select id="selectAllAdminRole" parameterType="com.carnoc.flight.userManager.pojo.AdminRole" resultMap="AdminRoleBase">
+        select * from f_admin_role
+    </select>
+    <!--添加一个用户组-->
+    <insert id="addAdminRole" parameterType="com.carnoc.flight.userManager.pojo.AdminRole">
+        insert into f_admin_role values (null,#{roleCode},#{name},null,#{addTime},#{roleState})
+    </insert>
+</mapper>

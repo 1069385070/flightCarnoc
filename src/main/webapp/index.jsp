@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,12 +145,15 @@
             $(".Current_page").html(cname).css({"color":"#333333","cursor":"default"}).ready();
             $("#parentIframe").html('<span class="parentIframe iframeurl"> </span>').css("display","none").ready();
             $("#parentIfour").html(''). css("display","none").ready();
-
-
         }
     </script>
 </head>
 <body>
+456
+<%--<shiro:hasPermission name="admin:create">
+    <input type="button" value="用户管理" onclick="window.location='${pageContext.request.contextPath}/admin/user_management.do'">
+</shiro:hasPermission>--%>
+123
 <div class="navbar navbar-default" id="navbar">
     <script type="text/javascript">
         try{ace.settings.check('navbar' , 'fixed')}catch(e){}
@@ -169,6 +173,9 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <%--<shiro:user>
+                            <span  class="time"><em id="time"></em></span><span class="user-info"><small>欢迎光临</small>[<shiro:principal/>]</span>
+                        </shiro:user>--%>
                         <span  class="time"><em id="time"></em></span><span class="user-info"><small>欢迎光临,</small>超级管理员</span>
                         <i class="icon-caret-down"></i>
                     </a>
@@ -229,8 +236,8 @@
                     </li>
                     <li><a href="#" class="dropdown-toggle"><i class="icon-laptop"></i><span class="menu-text"> 用户管理 </span><b class="arrow icon-angle-down"></b></a>
                         <ul class="submenu">
-                            <li class="home"><a href="javascript:void(0)" name="userlist.jsp" title="用户信息" class="iframeurl"><i class="icon-double-angle-right"></i>用户信息</a></li>
-                            <li class="home"><a href="javascript:void(0)" name="user-group.jsp" title="用户组信息" class="iframeurl"><i class="icon-double-angle-right"></i>用户组信息</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/admin/userlist.jsp" title="用户信息" class="iframeurl"><i class="icon-double-angle-right"></i>用户信息</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/admin/user-group.jsp" title="用户组信息" class="iframeurl"><i class="icon-double-angle-right"></i>用户组信息</a></li>
                         </ul>
                     </li>
 

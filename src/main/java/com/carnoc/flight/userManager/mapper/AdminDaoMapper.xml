@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口注册-->
+<mapper namespace="com.carnoc.flight.userManager.dao.AdminDao">
+
+    <resultMap id="AdminDaoBase" type="com.carnoc.flight.userManager.pojo.Admin">
+
+    </resultMap>
+
+    <select id="selectAdminByUsername" resultType="com.carnoc.flight.userManager.pojo.Admin">
+        select * from f_admin where username=#{username}
+    </select>
+
+    <select id="selectAllAdmin" resultType="map" parameterType="com.carnoc.flight.userManager.pojo.Admin">
+        select a.id,a.username,a.name,a.age,a.tel,a.qq,a.post,ar.name as roleName ,date_format(a.add_time,'%Y-%m-%d') as addTime,a.state from f_admin a ,f_admin_role ar where ar.id=a.role_id
+        <if test="username!=null and username!=''">
+            and a.username like '%${username}%'
+        </if>
+        <if test="name!=null and name!=''">
+            and a.name like '%${name}%'
+        </if>
+        <if test="tel!=null and tel!=''">
+            and a.tel=#{tel}
+        </if>
+        <if test="post!=null and post!=''">
+            <if test="post!='--所有--'">
+                and a.post=#{post}
+            </if>
+        </if>
+    </select>
+    <!--添加一个用户-->
+    <insert id="addAdmin" parameterType="com.carnoc.flight.userManager.pojo.Admin">
+        insert into f_admin values(null,null,#{username},#{password},#{name},#{sex},#{age},#{post},#{qq},#{tel},#{email},null,#{roleId},#{state},#{addTime},null,null)
+    </insert>
+
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口注册-->
+<mapper namespace="com.carnoc.flight.userManager.dao.MenuDao">
+
+    <resultMap id="MenuDaoBase" type="com.carnoc.flight.userManager.pojo.Menu">
+        <id property="id" column="id"></id>
+        <result property="fid" column="fid"></result>
+        <result property="name" column="name"></result>
+        <result property="url" column="url"></result>
+        <result property="menuCode" column="menu_code"></result>
+    </resultMap>
+
+    <!--根据用户名查询该用户对应的权限-->
+    <select id="selectMenuByAdminUsername" parameterType="string" resultMap="MenuDaoBase">
+        select m.* from f_admin a,f_admin_role ar,f_menu m where a.role_id=ar.id and m.id in (select id from f_menu where position(concat(id) in ar.menu_id)!=0) and a.username=#{username}
+    </select>
+
+    <!--根据权限父id查询该父id下所有的权限-->
+    <select id="selectMenuByMenuFId" parameterType="int" resultMap="MenuDaoBase">
+        select * from f_menu
+    </select>
+
+</mapper>

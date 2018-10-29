@@ -13,30 +13,36 @@
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="assets/css/ace.min.css" />
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../common/css/pagination.css" media="screen">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
 
     <!--  <link rel="stylesheet" href="font/css/font-awesome.min.css" />-->
 
     <script type="text/javascript">
-        window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+        window.jQuery || document.write("<script src='../assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
     </script>
     <script type="text/javascript">
-        if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+        if("ontouchend" in document) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
     </script>
     <!-- page specific plugin scripts -->
 
-    <script src="assets/layer/layer.js" type="text/javascript" ></script>
+    <script src="../assets/layer/layer.js" type="text/javascript" ></script>
+    <script type="text/javascript" src="../js/H-ui.js"></script>
+
+    <script src="../common/js/highlight.min.js"></script>
+    <!-- <script src="../My97DatePicker/WdatePicker.js"></script> -->
+    <script src="../common/js/jquery.pagination.js"></script>
     <title>用户组</title>
 </head>
 
 <body>
 <div class="margin clearfix">
     <div class="Shops_Audit">
-        <div class="border clearfix"> <span class="l_f"> <a href="javascript:" id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户</a> </span> <span class="r_f">共：<b>2345</b>条</span> </div>
+        <div class="border clearfix"> <span class="l_f"> <a href="javascript:" id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户</a> </span> <span class="r_f" id="count"></span> </div>
         <!--申请列表-->
         <div class="audit_list">
             <table class="table table-striped table-bordered table-hover" id="sample-table">
@@ -51,8 +57,8 @@
                     <th  >操作</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
+                <tbody id="tbody">
+                <%--<tr>
                     <td><label>
                         <input type="checkbox" class="ace">
                         <span class="lbl"></span></label></td>
@@ -61,12 +67,12 @@
                     <td class="td-status"><span class="label label-success radius">正常</span></td>
                     <td class="td-manage">
                         <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a>
-                        <a title="用户组详情" href="user-group-list.html" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
+                        <a title="用户组详情" href="user-group-list.jsp" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
                         <a title="修改权限" href="javascript:;"  onclick="member_edit('550')" class="btn btn-xs btn-warning">修改权限</a>
 
                     </td>
-                </tr>
-                <tr>
+                </tr>--%>
+                <%--<tr>
                     <td><label>
                         <input type="checkbox" class="ace">
                         <span class="lbl"></span></label></td>
@@ -75,12 +81,12 @@
                     <td class="td-status"><span class="label label-success radius">正常</span></td>
                     <td class="td-manage">
                         <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a>
-                        <a title="用户组详情" href="user-group-list.html" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
+                        <a title="用户组详情" href="user-group-list.jsp" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
                         <a title="修改权限" href="javascript:;"  onclick="member_edit('550')" class="btn btn-xs btn-warning">修改权限</a>
 
                     </td>
-                </tr>
-                <tr>
+                </tr>--%>
+                <%--<tr>
                     <td><label>
                         <input type="checkbox" class="ace">
                         <span class="lbl"></span></label></td>
@@ -89,11 +95,12 @@
                     <td class="td-status"><span class="label label-success radius">正常</span></td>
                     <td class="td-manage">
                         <a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a>
-                        <a title="用户组详情" href="user-group-list.html" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
+                        <a title="用户组详情" href="user-group-list.jsp" class="btn btn-xs btn-info Refund_detailed">用户组详情</a>
                         <a title="修改权限" href="javascript:;"  onclick="member_edit('550')" class="btn btn-xs btn-warning">修改权限</a>
 
+
                     </td>
-                </tr>
+                </tr>--%>
                 </tbody>
             </table>
 
@@ -108,7 +115,7 @@
         <li>
             <label class="label_name" style="width:100px !important">用户组编号：</label>
             <span class="add_name">
-            <input value="" name="用户组编号" type="text"  class="text_add"/>
+            <input value="" name="roleCode" type="text"  class="text_add"/>
             </span>
             <div class="prompt r_f"></div>
         </li>
@@ -116,7 +123,7 @@
         <li>
             <label class="label_name"  style="width:100px !important"> 用户组名称：</label>
             <span class="add_name">
-            <input name="用户组名称" type="text"  class="text_add"/>
+            <input name="name" type="text"  class="text_add"/>
             </span>
             <div class="prompt r_f"></div>
         </li>
@@ -126,8 +133,8 @@
 <!--修改权限图层-->
 <form class="member_edit" id="member_edit_style" style="display:none">
     <div class="Assign_style">
-        <div class="Select_Competence">
-            <dl class="permission-list">
+        <div class="Select_Competence" id="div">
+            <%--<dl class="permission-list">
                 <dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">产品管理</span></label></dt>
                 <dd>
                     <dl class="cl permission-list2">
@@ -160,13 +167,13 @@
                         </dd>
                     </dl>
                 </dd>
-            </dl>
+            </dl>--%>
 
 
-            </dd>
-            </dl>
+            <%--</dd>
+            </dl>--%>
             <!--交易管理-->
-            <dl class="permission-list">
+            <%--<dl class="permission-list">
                 <dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">数据管理</span></label></dt>
                 <dd>
                     <dl class="cl permission-list2">
@@ -182,10 +189,10 @@
 
 
                 </dd>
-            </dl>
+            </dl>--%>
 
             <!--会员管理-->
-            <dl class="permission-list">
+            <%--<dl class="permission-list">
                 <dt><label class="middle"><input name="user-Character-0" class="ace" type="checkbox" id="id-disable-check"><span class="lbl">用户管理</span></label></dt>
                 <dd>
                     <dl class="cl permission-list2">
@@ -219,35 +226,89 @@
                         </dd>
                     </dl>
                 </dd>
-            </dl>
+            </dl>--%>
+        </div>
+    </div>
 </form>
 </div>
 </body>
 </html>
 <script>
+    $().ready(function() {
+        selectAllAdminRole();
+
+    });
 
     /*按钮选择*/
     $(function(){
-        $(".permission-list dt input:checkbox").click(function(){
-            $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
-        });
-        $(".permission-list2 dd input:checkbox").click(function(){
-            var l =$(this).parent().parent().find("input:checked").length;
-            var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
-            if($(this).prop("checked")){
-                $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
-                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
-            }
-            else{
-                if(l==0){
-                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
-                }
-                if(l2==0){
-                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
-                }
-            }
+        $.ajax({
+            url: '/selectAllMenu.do',
+            type: 'post',  // 请求类型
+            //data: $("#add_menber_style").serialize(),  // post时请求体
+            dataType: 'json',  // 返回请求的类型，有text/json两种
+            async: true,   // 是否异步
+            /*  cache: true,   // 是否缓存 */
+            timeout:null,  // 设置请求超时
+            contentType: 'application/x-www-form-urlencoded',
+            success:function(data){
+                console.log(data)
+                //$("#div").html(data);
+                var html="";
+                var str="";
+                var str1="";
+                var str2="";
+                var menu=data[0];
+                var menu1=data[1];
+                var menu2=data[2];
+                $.each(menu1, function (index,element) {
+                    str+="<dl class='permission-list'>";
+                    str+="<dt><label class='middle'><input name='user-Character-0' class='ace' type='checkbox' id='id-disable-check' value='"+element.id+"'><span class='lbl'>"+element.name+"</span></label></dt>";
+                    str+="<dd>";
+                    $.each(menu, function (index1,element1) {
+                        if (element.id==element1.fid){
+                            str1+="<dl class='cl permission-list2'>";
+                            str1+="<dt><label class='middle'><input type='checkbox' value='"+element1.id+"' class='ace'  name='user-Character-0-0' id='id-disable-check'><span class='lbl'>"+element1.name+"</span></label></dt>";
+                            str1+="<dd>";
+                            $.each(menu2, function (index2,element2) {
+                                if (element2.fid==element1.id){
+                                    str2+="<label class='middle'><input type='checkbox' value='"+element2.id+"' class='ace' name='user-Character-0-0-0' id='user-Character-0-0-0'><span class='lbl'>"+element2.name+"</span></label>";
+                                }
+                            });
+                            str1+=str2;
+                            str2="";
+                            str1+="</dd>";
+                            str1+="</dl>";
+                        }
+                    });
+                    str+=str1;
+                    str1="";
+                    str+="</dd></dl>";
+                });
 
+                $("#div").html(str);
+                $(".permission-list dt input:checkbox").click(function(){
+                    $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+                });
+                $(".permission-list2 dd input:checkbox").click(function(){
+                    var l =$(this).parent().parent().find("input:checked").length;
+                    var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+                    if($(this).prop("checked")){
+                        $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+                        $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+                    }
+                    else{
+                        if(l==0){
+                            $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+                        }
+                        if(l2==0){
+                            $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                        }
+                    }
+
+                });
+            }
         });
+
     });
 
     /*用户组-编辑*/
@@ -263,7 +324,30 @@
             yes:function(index,layero){
                 var num=0;
                 var str="";
-                $(".member_edit input[type$='text']").each(function(n){
+                var s="";
+                var arr=$("input[type='checkbox']");
+                    for (var i = 0; i < arr.length; i++) {
+                    if(arr[i].checked==true){
+                        var str=arr[i].value
+                        s+=str+","
+                    }
+                }
+                if (s=="") {
+                    layer.alert("请勾选权限",{
+                        title: '提示框',
+                        icon:0,
+                    });
+                }else{
+                    alert(s);
+                    layer.alert('修改成功！',{
+                        title: '提示框',
+                        icon:1,
+                    });
+                    layer.close(index);
+                }
+
+
+                /*$(".member_edit input[type$='text']").each(function(n){
                     if($(this).val()=="")
                     {
 
@@ -272,7 +356,7 @@
                             icon:0,
                         });
                         num++;
-                        return false;
+                        return false;e
                     }
                 });
                 if(num>0){  return false;}
@@ -283,7 +367,7 @@
                         icon:1,
                     });
                     layer.close(index);
-                }
+                }*/
             }
         });
     }
@@ -314,12 +398,28 @@
                 });
                 if(num>0){  return false;}
                 else{
-                    $('#add_menber_style').submit();
-                    layer.alert('添加成功！',{
-                        title: '提示框',
-                        icon:1,
+                    $.ajax({
+                        url: '/addAdminRole.do',
+                        type: 'post',  // 请求类型
+                        data: $("#add_menber_style").serialize(),  // post时请求体
+                        dataType: 'json',  // 返回请求的类型，有text/json两种
+                        async: true,   // 是否异步
+                        /*  cache: true,   // 是否缓存 */
+                        timeout:null,  // 设置请求超时
+                        contentType: 'application/x-www-form-urlencoded',
+                        success:function(data){
+                            if (data>0){
+                                alert(123)
+                                layer.alert('添加成功！',{
+                                    title: '提示框',
+                                    icon:1,
+                                });
+                                layer.close(index);
+                                selectAllAdminRole()
+                            }
+
+                        }
                     });
-                    layer.close(index);
                 }
             }
         });
@@ -343,6 +443,38 @@
             $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
             $(obj).remove();
             layer.msg('已启用!',{icon: 6,time:1000});
+        });
+    }
+    function selectAllAdminRole(){
+        $.ajax({
+            url: '/selectAllAdminRole.do',
+            type: 'post',  // 请求类型
+            //data: param,  // post时请求体
+            dataType: 'json',  // 返回请求的类型，有text/json两种
+            async: true,   // 是否异步
+            /*  cache: true,   // 是否缓存 */
+            timeout:null,  // 设置请求超时
+            contentType: 'application/x-www-form-urlencoded',
+            success:function(data){
+                var str="";
+                var state="";
+                $("#count").html("共：<b>"+data.length+"</b>条");
+                $.each(data, function (index,element) {
+                    if (element.roleState==1){
+                        state="已启用";
+                    }
+                    if (element.roleState==0){
+                        state="已停用";
+                    }
+                    str+="<tr><td><label><input type='checkbox' class='ace'><span class='lbl'></span></label></td>";
+                    str+="<td>"+element.roleCode+"</td><td>"+element.name+"</td><td class='td-status'><span class='label label-success radius'>"+state+"</span></td>";
+                    str+="<td class='td-manage'><a onClick='member_stop(this,"+element.id+")'  href='javascript:;' title='停用'  class='btn btn-xs btn-success'><i class='icon-ok bigger-120'></i></a>";
+                    str+="<a title='用户组详情' href='user-group-list.jsp' class='btn btn-xs btn-info Refund_detailed'>用户组详情</a>";
+                    str+="<a title='修改权限' href='javascript:;'  onclick='member_edit("+element.id+")' class='btn btn-xs btn-warning'>修改权限</a></td></tr>";
+                });
+                $("#tbody").html(str);
+                //console.log(data)
+            }
         });
     }
 </script>

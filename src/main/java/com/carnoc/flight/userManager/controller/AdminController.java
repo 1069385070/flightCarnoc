@@ -1,63 +1,55 @@
 package com.carnoc.flight.userManager.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.carnoc.flight.userManager.pojo.Admin;
-import com.carnoc.flight.userManager.shiro.MyRealm;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.Subject;
+import com.carnoc.flight.userManager.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: AdminController
- * @Description: TODO 用户表处理类
+ * @Description: TODO
  * @Author: Administrator
- * @CreateDate: 2018/10/26 20:11
+ * @CreateDate: 2018/10/27 18:14
  * @UpdateUser: Administrator
- * @UpdateDate: 2018/10/26 20:11
+ * @UpdateDate: 2018/10/27 18:14
  * @UpdateRemark: 修改内容
  * @Version: 1.0
  */
 @Controller
 public class AdminController {
-    private static Logger logger= LogManager.getLogger(MyRealm.class);
-    @RequestMapping("/login")
-    public String login(Admin admin){
+    @Resource
+    private AdminService adminService;
+    @RequestMapping("/selectAllAdmin")
+    @ResponseBody
+    public List<Map<String,Object>> selectAllAdmin(Admin admin){
         System.out.println(admin);
-        // users.setPassword(CryptoUtils.encodeSHA(users.getPassword()));
-        System.out.println(admin.getPassword());
-        //获得当前的Subject,调用SecurityUtils.getSubject()
-        Subject subject = SecurityUtils.getSubject();
-        //把用户名和密码封装为UsernamePasswordToken对象
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(admin.getUsername(),admin.getPassword());
-        try {
-            //执行认证操作.
-            subject.login(usernamePasswordToken);
-        }
-        catch (UnknownAccountException ua){
-            logger.info("没有指定的账户："+ua.getMessage());
-            return "login.jsp";
-        }
-        catch (IncorrectCredentialsException ic){
-            logger.info("密码不匹配 ："+ic.getMessage());
-            return "login.jsp";
-        }
-        catch (LockedAccountException la){
-            logger.info("用户被锁定  ："+la.getMessage());
-            return "login.jsp";
-        }
-        catch (AuthenticationException ae){
-            logger.info("登录失败："+ae.getMessage());
-            return "login.jsp";
-        }
-//        // 执行登出，调用Subject的Logout()方法
-//        subject.logout();
-//
-//        //安全退出
-//        System.exit(0);
-
-        return "index.jsp";
+        List<Map<String,Object>> adminList = adminService.selectAllAdmin(admin);
+//        String toJSONString = JSONArray.toJSONString(adminList);
+//        out.write(toJSONString);
+        return adminList;
+    }
+    @RequestMapping("/addAdmin")
+    @ResponseBody
+    public String addAdmin(Admin admin){
+        Date d = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date=sdf.format(d);
+        admin.setAddTime(date);
+        admin.setEmail(admin.getQq()+"@qq.com");
+        admin.setState(1);
+        System.out.println(admin);
+        int i = adminService.addAdmin(admin);
+        System.out.println(i);
+        System.out.println("还有");
+        return i+"";
     }
 }

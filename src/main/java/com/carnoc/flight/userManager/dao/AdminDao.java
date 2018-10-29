@@ -3,6 +3,9 @@ package com.carnoc.flight.userManager.dao;
 import com.carnoc.flight.userManager.pojo.Admin;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @ClassName: AdminDao
  * @Description: TODO 用户表f_admin实体类接口
@@ -24,4 +27,24 @@ public interface AdminDao {
      * @exception
      */
     public Admin selectAdminByUsername(String username);
+    
+    /**
+     * @Author Administrator
+     * @Description //TODO 查询所有的用户
+     * @Date 21:17 2018/10/27
+     * @Param [admin]
+     * @return java.util.List<java.util.Map < java.lang.String , java.lang.Object>>
+     * @exception
+     */ 
+    public List<Map<String,Object>> selectAllAdmin(Admin admin);
+    
+    /**
+     * @Author Administrator
+     * @Description //TODO 添加一个用户
+     * @Date 14:44 2018/10/28
+     * @Param [admin]
+     * @return int
+     * @exception
+     */
+    public int addAdmin(Admin admin);
 }
