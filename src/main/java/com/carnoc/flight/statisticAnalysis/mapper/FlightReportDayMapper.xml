@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carnoc.flight.statisticAnalysis.dao.FlightReportDayDao">
+    <!--<insert id="addFlightReportDay" >-->
+    <!--INSERT INTO f_flight_report_day VALUES(#{id},#{day},#{flights},#{normalFlights},#{passengers},#{cargoWeight},#{rtype},#{addTime})-->
+    <!--</insert>-->
+
+
+    <select id="getFlightReportDay" parameterType="Integer" resultType="FlightReportDay">
+        SELECT ID,DAY,FLIGHTS,NORMAL_FLIGHTS,PASSENGERS,CARGO_WEIGHT,RTYPE,ADD_TIME
+        FROM F_FLIGHT_REPORT_DAY WHERE ID=#{id}
+    </select>
+
+
+    <select id="getFlightReportDayDate" parameterType="String" resultType="FlightReportDay">
+        SELECT FLIGHTS,NORMAL_FLIGHTS FROM F_FLIGHT_REPORT_DAY WHERE RTYPE=3 AND ADD_TIME=#{date}
+    </select>
+
+    <!--<resultMap id="flightReportDayMapper" type="com.carnoc.flight.statisticAnalysis.pojo.FlightReportDay">-->
+        <!--<id property="id" column="ID"/>-->
+        <!--<result property="day" column="DAY"/>-->
+        <!--<result property="flights" column="FLIGHTS"/>-->
+        <!--<result property="normalFlights" column="NORMAL_FLIGHTS"/>-->
+        <!--<result property="passengers" column="PASSENGERS"/>-->
+        <!--<result property="cargoWeight" column="CARGOWEIGHT"/>-->
+        <!--<result property="rtype" column="RTYPE"/>-->
+        <!--<result property="addTime" column="ADD_TIME"/>-->
+    <!--</resultMap>-->
+</mapper>

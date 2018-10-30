@@ -84,4 +84,7 @@
             table_menu:'.Ads_list'
         });
     });
+
+
+
 </script>

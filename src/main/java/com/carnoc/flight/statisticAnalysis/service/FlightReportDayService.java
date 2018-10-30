@@ -25,4 +25,11 @@ public interface FlightReportDayService {
      * @return
      */
     public List<FlightReportDay> getFlightReportDay(Integer id);
+
+    /**
+     * 查询过站的数据
+     * @param date
+     * @return
+     */
+    public FlightReportDay getFlightReportDayDate(String date);
 }

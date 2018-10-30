@@ -2,11 +2,13 @@ package com.carnoc.flight.statisticAnalysis.controller;
 
 import com.carnoc.flight.statisticAnalysis.pojo.FlightReportDay;
 import com.carnoc.flight.statisticAnalysis.service.FlightReportDayService;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.NestedServletException;
 
 import javax.annotation.Resource;
@@ -53,5 +55,18 @@ public class FlightReportDayController {
         System.out.println(flightReportDay);
 
         return null;
+    }
+
+
+    @RequestMapping("/getFlightReportDayDate")
+    @ResponseBody
+    public FlightReportDay getFlightReportDayDaoDate(String addTimes){
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(addTimes);
+        if(addTimes==null){
+            addTimes = dateformat.format(System.currentTimeMillis()-86400000);
+        }
+        FlightReportDay flightReportDayDate = flightReportDayService.getFlightReportDayDate(addTimes);
+        return flightReportDayDate;
     }
 }

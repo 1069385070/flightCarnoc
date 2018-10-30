@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/getFlightReportDayDao.do">点击</a>
+<a href="/getFlightReportDayDaoDate.do">点击</a>
 </body>
 </html>

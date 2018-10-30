@@ -28,4 +28,11 @@ public class FlightReportDayServiceImpl implements FlightReportDayService {
     public List<FlightReportDay> getFlightReportDay(Integer id) {
         return flightReportDayDao.getFlightReportDay(id);
     }
+
+
+
+    @Override
+    public FlightReportDay getFlightReportDayDate(String date) {
+        return flightReportDayDao.getFlightReportDayDate(date);
+    }
 }
