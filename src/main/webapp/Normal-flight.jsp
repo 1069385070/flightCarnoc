@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="Ads_list">
-        <iframe id="iframe"  scrolling="auto" style="border:0; min-height:740px;width:100%;background-color:#FFF;"name="iframe" frameborder="0"  src="echart1.html"	> </iframe>
+        <iframe id="iframe"  scrolling="auto" style="border:0; min-height:740px;width:100%;background-color:#FFF;"name="iframe" frameborder="0"  src="echart1.jsp"	> </iframe>
     </div>
 </div>
 </body>
@@ -84,4 +84,7 @@
             table_menu:'.Ads_list'
         });
     });
+
+
+
 </script>

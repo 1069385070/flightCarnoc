@@ -35,11 +35,11 @@
             <ul class="search_content clearfix" >
                 <li>
                     <label class="l_f">起始时间：</label>
-                    <input id="J-xl"  type="text"   style=" margin-left:10px;">
+                    <input id="J-xl"  type="date"   style=" margin-left:10px;">
                 </li>
                 <li>
                     <label class="l_f">结束时间：</label>
-                    <input class=" "  type="text"   style=" margin-left:10px;">
+                    <input class=" "  type="date"   style=" margin-left:10px;">
                 </li>
                 <li style="width:90px;">
                     <button type="button" class="btn_search" onclick="search_flight1()"><i class="icon-search"></i>查询</button>
@@ -136,7 +136,7 @@
                         radius : '55%',
                         center: ['50%', '60%'],
                         data:[
-                            {value:335, name:'正常航班'},
+                            {value:999, name:'正常航班'},
                             {value:210, name:'非正常航班'},
 
                         ]
@@ -194,7 +194,7 @@
                     {
                         name:'旅行不正常原因占比',
                         type:'bar',
-                        data:[20, 49, 70, 23 ],
+                        data:[20, 70, 70, 23 ],
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'}
