@@ -43,7 +43,7 @@ public class FlightRecord implements Serializable {
     private String planLandTime;//计划落地时间
     private String realTakeTime;//实际起飞时间
     private String realLandTime;//实际落地时间
-    private String BlockTime;//挡轮挡时间
+    private String blockTime;//挡轮挡时间
     private String removeTime;//撤轮档时间
     private String delayRemark;//航班延误原因
     private int delayTime;//航班延误时长
@@ -51,9 +51,50 @@ public class FlightRecord implements Serializable {
     private String doorOpenTime;//开舱门时间
     private String doorCloseTime;//关舱门时间
     private String flightStatus;//航班状态
-    private String isFirst;//是否为首航
+    private String isFirst;
 
     public FlightRecord() {
+    }
+
+    public FlightRecord(int code, Date doDate, String airCode, String flightNo, String no, String inOut, String nature, String task, String attribute, String seat, String gate, String luggageTurnTable, int relationId, int airlineId, String airlineCompany, String flightMission, String flightAgent, String airportStart, String airportEnd, String airportEndSpare, int adultNum, int childNum, int babyNum, int luggateNum, double cargoWeight, String planTakeTime, String planLandTime, String realTakeTime, String realLandTime, String blockTime, String removeTime, String delayRemark, int delayTime, String terminal, String doorOpenTime, String doorCloseTime, String flightStatus, String isFirst) {
+        this.code = code;
+        this.doDate = doDate;
+        this.airCode = airCode;
+        this.flightNo = flightNo;
+        this.no = no;
+        this.inOut = inOut;
+        this.nature = nature;
+        this.task = task;
+        this.attribute = attribute;
+        this.seat = seat;
+        this.gate = gate;
+        this.luggageTurnTable = luggageTurnTable;
+        this.relationId = relationId;
+        this.airlineId = airlineId;
+        this.airlineCompany = airlineCompany;
+        this.flightMission = flightMission;
+        this.flightAgent = flightAgent;
+        this.airportStart = airportStart;
+        this.airportEnd = airportEnd;
+        this.airportEndSpare = airportEndSpare;
+        this.adultNum = adultNum;
+        this.childNum = childNum;
+        this.babyNum = babyNum;
+        this.luggateNum = luggateNum;
+        this.cargoWeight = cargoWeight;
+        this.planTakeTime = planTakeTime;
+        this.planLandTime = planLandTime;
+        this.realTakeTime = realTakeTime;
+        this.realLandTime = realLandTime;
+        this.blockTime = blockTime;
+        this.removeTime = removeTime;
+        this.delayRemark = delayRemark;
+        this.delayTime = delayTime;
+        this.terminal = terminal;
+        this.doorOpenTime = doorOpenTime;
+        this.doorCloseTime = doorCloseTime;
+        this.flightStatus = flightStatus;
+        this.isFirst = isFirst;
     }
 
     public FlightRecord(int id, int code, Date doDate, String airCode, String flightNo, String no, String inOut, String nature, String task, String attribute, String seat, String gate, String luggageTurnTable, int relationId, int airlineId, String airlineCompany, String flightMission, String flightAgent, String airportStart, String airportEnd, String airportEndSpare, int adultNum, int childNum, int babyNum, int luggateNum, double cargoWeight, String planTakeTime, String planLandTime, String realTakeTime, String realLandTime, String blockTime, String removeTime, String delayRemark, int delayTime, String terminal, String doorOpenTime, String doorCloseTime, String flightStatus, String isFirst) {
@@ -87,7 +128,7 @@ public class FlightRecord implements Serializable {
         this.planLandTime = planLandTime;
         this.realTakeTime = realTakeTime;
         this.realLandTime = realLandTime;
-        BlockTime = blockTime;
+        this.blockTime = blockTime;
         this.removeTime = removeTime;
         this.delayRemark = delayRemark;
         this.delayTime = delayTime;
@@ -97,50 +138,6 @@ public class FlightRecord implements Serializable {
         this.flightStatus = flightStatus;
         this.isFirst = isFirst;
     }
-
-    public FlightRecord(int code, Date doDate, String airCode, String flightNo, String no, String inOut, String nature, String task, String attribute, String seat, String gate, String luggageTurnTable, int relationId, int airlineId, String airlineCompany, String flightMission, String flightAgent, String airportStart, String airportEnd, String airportEndSpare, int adultNum, int childNum, int babyNum, int luggateNum, double cargoWeight, String planTakeTime, String planLandTime, String realTakeTime, String realLandTime, String blockTime, String removeTime, String delayRemark, int delayTime, String terminal, String doorOpenTime, String doorCloseTime, String flightStatus, String isFirst) {
-        this.code = code;
-        this.doDate = doDate;
-        this.airCode = airCode;
-        this.flightNo = flightNo;
-        this.no = no;
-        this.inOut = inOut;
-        this.nature = nature;
-        this.task = task;
-        this.attribute = attribute;
-        this.seat = seat;
-        this.gate = gate;
-        this.luggageTurnTable = luggageTurnTable;
-        this.relationId = relationId;
-        this.airlineId = airlineId;
-        this.airlineCompany = airlineCompany;
-        this.flightMission = flightMission;
-        this.flightAgent = flightAgent;
-        this.airportStart = airportStart;
-        this.airportEnd = airportEnd;
-        this.airportEndSpare = airportEndSpare;
-        this.adultNum = adultNum;
-        this.childNum = childNum;
-        this.babyNum = babyNum;
-        this.luggateNum = luggateNum;
-        this.cargoWeight = cargoWeight;
-        this.planTakeTime = planTakeTime;
-        this.planLandTime = planLandTime;
-        this.realTakeTime = realTakeTime;
-        this.realLandTime = realLandTime;
-        BlockTime = blockTime;
-        this.removeTime = removeTime;
-        this.delayRemark = delayRemark;
-        this.delayTime = delayTime;
-        this.terminal = terminal;
-        this.doorOpenTime = doorOpenTime;
-        this.doorCloseTime = doorCloseTime;
-        this.flightStatus = flightStatus;
-        this.isFirst = isFirst;
-    }
-
-    //set/get方法
-
 
     public int getId() {
         return id;
@@ -188,14 +185,6 @@ public class FlightRecord implements Serializable {
 
     public void setNo(String no) {
         this.no = no;
-    }
-
-    public String getIsFirst() {
-        return isFirst;
-    }
-
-    public void setIsFirst(String isFirst) {
-        this.isFirst = isFirst;
     }
 
     public String getInOut() {
@@ -391,11 +380,11 @@ public class FlightRecord implements Serializable {
     }
 
     public String getBlockTime() {
-        return BlockTime;
+        return blockTime;
     }
 
     public void setBlockTime(String blockTime) {
-        BlockTime = blockTime;
+        this.blockTime = blockTime;
     }
 
     public String getRemoveTime() {
@@ -454,6 +443,13 @@ public class FlightRecord implements Serializable {
         this.flightStatus = flightStatus;
     }
 
+    public String getIsFirst() {
+        return isFirst;
+    }
+
+    public void setIsFirst(String isFirst) {
+        this.isFirst = isFirst;
+    }
 
     @Override
     public String toString() {
@@ -488,7 +484,7 @@ public class FlightRecord implements Serializable {
                 ", planLandTime='" + planLandTime + '\'' +
                 ", realTakeTime='" + realTakeTime + '\'' +
                 ", realLandTime='" + realLandTime + '\'' +
-                ", BlockTime='" + BlockTime + '\'' +
+                ", blockTime='" + blockTime + '\'' +
                 ", removeTime='" + removeTime + '\'' +
                 ", delayRemark='" + delayRemark + '\'' +
                 ", delayTime=" + delayTime +

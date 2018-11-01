@@ -6,8 +6,11 @@ import com.carnoc.flight.flightInformation.pojo.AirportBasicData;
 import com.carnoc.flight.flightInformation.pojo.FlightRecord;
 import com.carnoc.flight.flightInformation.service.AircompanytBasicDataService;
 import com.carnoc.flight.flightInformation.service.FlightRecordService;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +37,10 @@ public class FlightRecordController {
      * /获得航班动态信息
      * @param response
      * @param flightRecord
-     * @param session
      * @throws IOException
      */
     @RequestMapping(value="/getFlightRecord.do")
-    public void getFlightRecord(HttpServletResponse response, FlightRecord flightRecord, HttpSession session) throws IOException {
+    public void getFlightRecord(HttpServletResponse response, FlightRecord flightRecord) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         //获得航班动态信息
         List<FlightRecord> flightRecordList = flightRecordService.getFlightRecord(flightRecord);
@@ -49,32 +51,57 @@ public class FlightRecordController {
     /**
      * 获得航空公司基础数据
      * @param response
-     * @param session
      */
     @RequestMapping("/getAirCompanyBasicData.do")
-    public void getAirCompanyBasicData(HttpServletResponse response,HttpSession session) throws IOException{
+    public void getAirCompanyBasicData(HttpServletResponse response) throws IOException{
         response.setContentType("text/html;charset=utf-8");
         List<AircompanytBasicData> airportBasicDataList =aircompanytBasicDataService.getAircompanytBasicData();
         response.getWriter().write(JSON.toJSONString(airportBasicDataList));
     }
 
 
-
-
     /**
      * 按条件查询航班动态信息
      * @param response
      * @param flightRecord
-     * @param session
      * @throws IOException
      */
     @RequestMapping(value="/getFlightRecordByCondition.do")
-    public void getFlightRecordBy(HttpServletResponse response, FlightRecord flightRecord, HttpSession session) throws IOException {
+    public void getFlightRecordBy(HttpServletResponse response, FlightRecord flightRecord) throws IOException {
         response.setContentType("text/html;charset=utf-8");
         System.out.println("查询条件："+flightRecord);
         List<FlightRecord> flightRecordList = flightRecordService.getFlightRecord(flightRecord);
         response.getWriter().write(JSON.toJSONString(flightRecordList));
     }
+
+
+    /**
+     * 根据id获得航班动态数据
+     * @param id
+     */
+    @RequestMapping(value = "/getFlightRecordById.do")
+    @ResponseBody
+    public FlightRecord getFlightRecordById(int id, HttpServletResponse response){
+        FlightRecord flightRecord= flightRecordService.getFlightRecordById(id);
+        return flightRecord;
+    }
+
+    /**
+     * 修改航班动态信息数据
+     * @param flightRecord
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value ="/updateFlightRecord.do")
+    public void updateFlightRecord(FlightRecord flightRecord,HttpServletResponse response) throws  IOException{
+        String result = flightRecordService.updateFlightRecord(flightRecord)+"";
+        response.getWriter().write(result);
+    }
+
+
+
+
+
 
 
 

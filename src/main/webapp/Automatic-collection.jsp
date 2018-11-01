@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -43,7 +43,8 @@
                         <th width="140">操作</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="port">
+
                     <tr>
                         <td><label>
                             <input type="checkbox" class="ace">
@@ -55,17 +56,7 @@
                         <td class="td-status"><span class="label label-success radius">自动</span></td>
                         <td class="td-manage"><a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a></td>
                     </tr>
-                    <tr>
-                        <td><label>
-                            <input type="checkbox" class="ace">
-                            <span class="lbl"></span></label></td>
-                        <td>002</td>
-                        <td>安检系统</td>
-                        <td>www.anjian.com</td>
-                        <td>2017-2-11 17:23</td>
-                        <td class="td-status"><span class="label label-success radius">自动</span></td>
-                        <td class="td-manage"><a onClick="member_stop(this,'10001')"  href="javascript:;" title="停用"  class="btn btn-xs btn-success"><i class="icon-ok bigger-120"></i></a> <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-warning" ><i class="icon-trash  bigger-120"></i></a></td>
-                    </tr>
+
                     </tbody>
                 </table>
                 <div style=" float:right; margin-right:20px;">
@@ -89,10 +80,66 @@
 </body>
 </html>
 <script>
+
+    /*初始化数据*/
+   window.onload=function () {
+        $.ajax({
+            url:"/conllection.do",
+            success:function(data){
+                var html="";
+                $.each(data,function (index,port) {
+                    html+="";
+                    html2="<span class=\"label label-success radius\">自动</span>";
+                    html3="<span class=\"label label-defaunt radius\">已停用</span>";
+                    if(port.portStatus=='自动'){
+                        html+="<tr>\n" +
+                            "                        <td><label>\n" +
+                            "                            <input type=\"checkbox\" class=\"ace\">\n" +
+                            "                            <span class=\"lbl\"></span></label></td>\n" +
+                            "                        <td>"+port.id+"</td>\n" +
+                            "                        <td>"+port.name+"</td>\n" +
+                            "                        <td>"+port.url+"</td>\n" +
+                            "                        <td>"+port.updataTime+"</td>\n" +
+                            "                        <td class=\"td-status\">"+html2+"</span></td>\n" +
+                            "                        <td class=\"td-manage\"><a onClick=\"member_stop(this,"+port.id+")\"  href=\"javascript:;\" title=\"停用\"  class=\"btn btn-xs btn-success\"><i class=\"icon-ok bigger-120\"></i></a> <a title=\"删除\" href=\"javascript:;\"  onclick=\"member_del(this,"+port.id+")\" class=\"btn btn-xs btn-warning\" ><i class=\"icon-trash  bigger-120\"></i></a></td>\n" +
+                            "                    </tr>";
+                    }
+                    if(port.portStatus=='已停用'){
+                        html+="<tr>\n" +
+                            "                        <td><label>\n" +
+                            "                            <input type=\"checkbox\" class=\"ace\">\n" +
+                            "                            <span class=\"lbl\"></span></label></td>\n" +
+                            "                        <td>"+port.id+"</td>\n" +
+                            "                        <td>"+port.name+"</td>\n" +
+                            "                        <td>"+port.url+"</td>\n" +
+                            "                        <td>"+port.updataTime+"</td>\n" +
+                            "                        <td class=\"td-status\">"+html3+"</span></td>\n" +
+                            "                        <td class=\"td-manage\"><a style=\"text-decoration:none\" class=\"btn btn-xs \" onClick=\"member_start(this,"+port.id+")\" href=\"javascript:;\" title=\"启用\"><i class=\"icon-ok bigger-120\"></i></a><a title=\"删除\" href=\"javascript:;\"  onclick=\"member_del(this,"+port.id+")\" class=\"btn btn-xs btn-warning\" ><i class=\"icon-trash  bigger-120\"></i></a></td>\n" +
+                            "                    </tr>";
+                    }
+
+
+
+
+                })
+                $('#port').html(html);
+            }
+        });
+    }
+
     /*-删除*/
     function member_del(obj,id){
+        alert('id'+id);
         layer.confirm('确认要删除吗？',function(index){
             $(obj).parents("tr").remove();
+            $.ajax({
+                url:'/delPortStarusById.do',
+                method:'post',
+                data:{id:id},
+                success:function (data) {
+                    console.log(data);
+                }
+            })
             layer.msg('已删除!',{icon:1,time:1000});
         });
     }
@@ -104,7 +151,20 @@
             $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="icon-ok bigger-120"></i></a>');
             $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
             $(obj).remove();
-            layer.msg('已停用!',{icon: 5,time:1000});
+            $.ajax({
+                url:'/updataPortStatus.do',
+                method:'post',
+                data:{id:id,portStatus:'已停用'},
+                success:function (data) {
+                    if(data>0){
+                        layer.msg('已停用!',{icon: 5,time:1000});
+                    }
+                    if(data<=0){
+                        layer.msg('停用失败!',{icon: 5,time:1000});
+                    }
+                }
+            })
+
         });
     }
 
@@ -114,7 +174,20 @@
             $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="icon-ok bigger-120"></i></a>');
             $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">自动</span>');
             $(obj).remove();
-            layer.msg('已启用!',{icon: 6,time:1000});
+            $.ajax({
+                url:'/updataPortStatus.do',
+                method:'post',
+                data:{id:id,portStatus:'自动'},
+                success:function (data) {
+                    if(data>0){
+                        layer.msg('已启用!',{icon: 6,time:1000});
+                    }
+                    if(data<=0){
+                        layer.msg('启用失败!',{icon: 5,time:1000});
+                    }
+                }
+            })
+
         });
     }
 </script>

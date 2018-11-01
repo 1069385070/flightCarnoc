@@ -29,6 +29,23 @@ public class FlightRecordServiceImpl  implements FlightRecordService{
         return flightRecordDao.getFlightRecord(flightRecord);
     }
 
+    /**
+     * 根据id获得航班动态数据
+     * @param id
+     * @return FlightRecord
+     */
+    @Override
+    public FlightRecord getFlightRecordById(int id) {
+        return flightRecordDao.getFlightRecordById(id);
+    }
 
+    /**
+     * 根据id修改航班动态数据updateFlightRecord
+     * @param flightRecord
+     * @return
+     */
+    public int updateFlightRecord(FlightRecord flightRecord){
+        return flightRecordDao.updateFlightRecord(flightRecord);
+    }
 
 }

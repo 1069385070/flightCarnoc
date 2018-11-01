@@ -7,30 +7,42 @@
     <select id="getFlightRecord" parameterType="FlightRecord" resultType="FlightRecord">
         select * from f_flight_record where 1=1
         <if test="flightNo!=null and flightNo!=''">
-          and FLIGHT_NO = #{flightNo}
+            and FLIGHT_NO = #{flightNo}
         </if>
         <if test="no!=null and no!=''">
             and NO = #{no}
         </if>
-        <if test="isFirst !=null and isFirst !='否'">
-            and ISFIRST = #{isFirst}
-        </if>
         <if test="inOut!=null and inOut !='所有' ">
             and IN_OUT = #{inOut}
         </if>
-
         <if test="airlineId!=0">
             and AIRLINE_ID = #{airlineId}
         </if>
-
-      <if test="nature!=null and nature !='所有' ">
-          and NATURE = #{nature}
-      </if>
-      <if test="flightStatus!=null and flightStatus !='所有' ">
-          and FLIGHT_STATUS = #{flightStatus}
-      </if>
+        <if test="nature!=null and nature !='所有' ">
+            and NATURE = #{nature}
+        </if>
+        <if test="flightStatus!=null and flightStatus !='所有' ">
+            and FLIGHT_STATUS = #{flightStatus}
+        </if>
+        <if test="isFirst !=null and isFirst !=''">
+            and IS_FIRST=#{isFirst}
+        </if>
+        <if test="planTakeTime !=null and planTakeTime!=''">
+            and PLAN_TAKE_TIME  LIKE  '%${planTakeTime}%'
+        </if>
     </select>
 
+    <!--根据id获得航班动态数据-->
+    <select id="getFlightRecordById" parameterType="int" resultType="FlightRecord">
+       SELECT * FROM f_flight_record WHERE ID =#{id}
+    </select>
+
+    <!--根据id修改航班动态数据-->
+    <update id="updateFlightRecord" parameterType="FlightRecord">
+        UPDATE f_flight_record
+        SET SEAT=#{seat},GATE=#{gate},LUGGAGE_TURNTABLE=#{luggageTurnTable},RELATION_ID=#{relationId},FLIGHT_AGENT=#{flightAgent},AIRPORT_START=#{airportStart},AIRPORT_END_SPARE=#{airportEndSpare},ADULT_NUM=#{adultNum},CHILD_NUM=#{childNum},BABY_NUM=#{babyNum},LUGGAGE_NUM=#{luggateNum},CARGO_WEIGHT=#{cargoWeight},DELAY_REMARK=#{delayRemark},TERMINAL=#{terminal},FLIGHT_STATUS=#{flightStatus},IS_FIRST=#{isFirst}
+        WHERE ID=#{id}
+    </update>
 
 
 </mapper>

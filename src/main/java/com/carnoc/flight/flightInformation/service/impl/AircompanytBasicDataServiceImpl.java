@@ -28,4 +28,13 @@ public class AircompanytBasicDataServiceImpl implements AircompanytBasicDataServ
     public List<AircompanytBasicData> getAircompanytBasicData() {
         return aircompanytBasicDataDao.getAircompanytBasicData();
     }
+
+    /**
+     * 添加航空公司基础数据
+     * @return
+     */
+    @Override
+    public int addAirCompanyBasicData(List<AircompanytBasicData> aircompanytBasicData) {
+        return aircompanytBasicDataDao.addAirCompanyBasicData(aircompanytBasicData);
+    }
 }

@@ -4,6 +4,22 @@
 <mapper namespace="com.carnoc.flight.flightInformation.dao.ConllectionDao">
 
 
+    <!--获得自动采集接口-->
+    <select id="getAllPort" resultType="Conllection">
+        select ID,NAME,URL,UPDATA_TIME,PORT_STATUS from f_collection
+    </select>
+
+    <!--根据id修改采集数据接口转态-->
+    <update id="updataPortStatus" parameterType="Conllection">
+        UPDATE  f_collection
+        SET  PORT_STATUS =#{portStatus}
+        WHERE ID = #{id}
+    </update>
+
+    <!--根据id删除接口-->
+    <delete id="delPortStarusById" parameterType="int">
+        DELETE FROM F_COLLECTION WHERE ID=#{id}
+    </delete>
 
 
 </mapper>

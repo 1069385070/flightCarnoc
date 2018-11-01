@@ -19,5 +19,10 @@ public interface AircompanytBasicDataService {
     public List<AircompanytBasicData> getAircompanytBasicData();
 
 
+    /**
+     * 添加航空公司基础数据
+     * @return
+     */
+    public int addAirCompanyBasicData(List<AircompanytBasicData> aircompanytBasicData);
 
 }

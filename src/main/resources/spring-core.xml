@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,12 +10,18 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <!--使用注解开发-->
     <mvc:annotation-driven />
     <!--自动扫描：自动扫描com.heyang.ssm包下所有类的注解-->
     <context:component-scan base-package="com.carnoc.flight"/>
+    <!-- 定时任务 -->
+    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
+    <task:scheduler id="qbScheduler" />
+
+
 
 
     <!--导入redis配置-->
@@ -25,6 +32,12 @@
 
     <!--导入redis配置-->
     <!--<import resource="spring-redis.xml"/>-->
+
+
+
+
+
+
 
     <!--配置数据源 从c3p0-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">

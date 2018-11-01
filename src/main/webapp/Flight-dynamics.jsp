@@ -62,7 +62,7 @@
                         <li>
                             <label class="l_f">所有航班：</label>
                             <select id="isFirst" name="" style=" width:110px">
-                                <option value="否">---所有---</option>
+                                <option value="">------</option>
                                 <option value="是">始发航班</option>
                             </select>
                         </li>
@@ -95,6 +95,10 @@
                                 <option>延误</option>
                                 <option>正常</option>
                                 <option>取消</option>
+                                <option>备降</option>
+                                <option>返航</option>
+
+
                             </select>
                         </li>
                     </ul>
@@ -144,7 +148,7 @@
                             <td>${flightRecord.planLandTime}</td>
                             <td>${flightRecord.airportEnd}</td>
                             <td class="td-status"><span class="label label-success radius">${flightRecord.flightStatus}</span></td>
-                            <td class="td-manage"><a title="编辑" onclick="member_edit('550')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>
+                            <td class="td-manage"><a title="编辑" onclick="member_edit('${flightRecord.id}')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -171,245 +175,231 @@
         </div>
     </div>
 </div>
+
+
 <!--修改图层-->
-<form id="add_menber_form">
+<form id="add_menber_form" method="post">
     <div class="add_menber" id="add_menber_style" style="display:none; width:900px !important;">
         <ul class=" page-content">
             <li >
-                <label class="label_name">成人数量：</label>
+                <label class="label_name" >成人数量：</label>
                 <span class="add_name">
-      <input value="" name="成人数量" type="text"  class="text_add"/>
+      <input value="" id="adultNum" name="成人数量" type="text"  class="text_add"/>
+                    <input type="hidden"  id="flightDataId"  value=""/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">儿童数量：</label>
                 <span class="add_name">
-      <input name="儿童数量" type="text"  class="text_add"/>
+      <input id="childNum" name="儿童数量" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">婴儿数量：</label>
                 <span class="add_name">
-      <input name="婴儿数量" type="text"  class="text_add"/>
+      <input id="babyNum" name="婴儿数量" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">计划起飞时间：</label>
                 <span class="add_name">
-      <input name="计划起飞时间" type="text"  class="text_add"/>
+      <input  id="planTakeTime2" name="计划起飞时间" type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">实际起飞时间：</label>
                 <span class="add_name">
-      <input name="实际起飞时间" type="text"  class="text_add"/>
+      <input id="realTakeTime" name="实际起飞时间" type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">行李件数：</label>
                 <span class="add_name">
-      <input name="行李件数" type="text"  class="text_add"/>
+      <input id="luggateNum" name="行李件数" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">货邮重量：</label>
                 <span class="add_name">
-      <input name="货邮重量" type="text"  class="text_add"/>
+      <input id="cargoWeight" name="货邮重量" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">撒轮挡时间：</label>
                 <span class="add_name">
-      <input name="撒轮挡时间" type="text"  class="text_add"/>
+      <input id="removeTime" name="撒轮挡时间"  type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">计划落地时间：</label>
                 <span class="add_name">
-      <input name="计划落地时间" type="text"  class="text_add"/>
+      <input  id="planLandTime" name="计划落地时间" type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">航班号：</label>
                 <span class="add_name">
-      <input name="航班号" type="text"  class="text_add"/>
+      <input id="flightNo2" name="航班号" type="text"  class="text_add" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">机位：</label>
                 <span class="add_name">
-      <input name="机位" type="text"  class="text_add"/>
+      <input id="seat" name="机位" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">实际落地时间：</label>
                 <span class="add_name">
-      <input name="实际落地时间" type="text"  class="text_add"/>
+      <input id="realLandTime" name="实际落地时间" type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">挡轮挡时间：</label>
                 <span class="add_name">
-      <input name="挡轮挡时间" type="text"  class="text_add"/>
+      <input id="blockTime" name="挡轮挡时间" type="text"  class="text_add" disabled="disabled"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">执行日期：</label>
                 <span class="add_name">
-      <input name="执行日期" type="text"  class="text_add"/>
+      <input id="doDate" name="执行日期" type="text"  class="text_add" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">登机口：</label>
                 <span class="add_name">
-      <input name="登机口" type="text"  class="text_add"/>
+      <input id="gate" name="登机口" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">二字码：</label>
                 <span class="add_name">
-      <input name="航空公司二字码" type="text"  class="text_add"/>
+      <input id="airCode" name="航空公司二字码" type="text"  class="text_add" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">行李转盘：</label>
                 <span class="add_name">
-      <input name="行李转盘" type="text"  class="text_add"/>
+      <input id="luggageTurnTable" name="行李转盘" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">航空公司：</label>
                 <span class="add_name">
-      <input name="航空公司" type="text"  class="text_add" readonly="readonly" value="江西南昌航空公司  "/>
+      <input id="airlineCompany" name="航空公司" type="text"  class="text_add" readonly="readonly" value="" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">起飞机场：</label>
                 <span class="add_name">
-      <input name="起飞机场" type="text"  class="text_add"/>
+      <input id="airportStart" name="起飞机场" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">机号：</label>
                 <span class="add_name">
-      <input name="机号" type="text"  class="text_add"/>
+      <input id="no3" name="机号" type="text"  class="text_add" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">机型：</label>
                 <span class="add_name">
-      <input name="机型" type="text"  class="text_add"/>
+      <input id="attribute" name="机型" type="text"  class="text_add" readonly="readonly"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">备降机场：</label>
                 <span class="add_name">
-      <input name="备降机场" type="text"  class="text_add"/>
+      <input id="airportEndSpare" name="备降机场" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">关联航班ID：</label>
                 <span class="add_name">
-      <input name="关联航班ID" type="text"  class="text_add"/>
+      <input id="relationId" name="关联航班ID" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">航站楼：</label>
                 <span class="add_name">
-      <input name="航站楼" type="text"  class="text_add"/>
+      <input id="terminal" name="航站楼" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">航班代理：</label>
                 <span class="add_name">
-      <input name="航班代理" type="text"  class="text_add"/>
+      <input id="flightAgent" name="航班代理" type="text"  class="text_add"/>
       </span>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">是否始发航班：</label>
-                <select name="" style=" width:156px; margin-left:10px;">
-                    <option>始发航班</option>
-                    <option>非始发航班</option>
+                <select name="" style=" width:156px; margin-left:10px;" id="isFirst2">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">航班状态：</label>
-                <select name="" style=" width:156px; margin-left:10px;">
-                    <option>延误</option>
-                    <option>正常</option>
-                    <option>取消</option>
-                    <option>备降</option>
-                    <option>返航</option>
+                <select name="" style=" width:156px; margin-left:10px;" id="flightStatus2">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">国内/外航班：</label>
-                <select name="" style=" width:156px ; margin-left:10px;">
-                    <option>国内航班</option>
-                    <option>国外航班</option>
+                <select name="" style=" width:156px ; margin-left:10px;" disabled="disabled" id="nature2">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">不正常原因：</label>
-                <select name="" style=" width:156px; margin-left:10px;">
-                    <option>无</option>
-                    <option>天气</option>
-                    <option>飞机</option>
-                    <option>乘客</option>
+                <select name="" style=" width:156px; margin-left:10px;" id="delayRemark">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">进/出港：</label>
-                <select name="" style=" width:156px; margin-left:10px;">
-                    <option>进港</option>
-                    <option>出港</option>
+                <select name="" style=" width:156px; margin-left:10px;" id="inOut2" disabled="disabled">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
             <li>
                 <label class="label_name">任务性质：</label>
-                <select name="" style=" width:156px; margin-left:10px;">
-                    <option>退航</option>
-                    <option>正班</option>
-                    <option>补班</option>
-                    <option>专机</option>
-                    <option>转场</option>
-                    <option>训练</option>
+                <select name="" style=" width:156px; margin-left:10px;" id="task" disabled="disabled">
                 </select>
                 <div class="prompt r_f"></div>
             </li>
         </ul>
     </div>
 </form>
+
+
+
+
 </body>
 </html>
 <script src="js/jquery-1.7.2.min.js"></script>
@@ -441,7 +431,7 @@
                         '<td>'+comment.planLandTime+'</td>\n' +
                         '<td>'+comment.airportEnd+'</td>\n' +
                         '<td class="td-status"><span class="label label-success radius">'+comment.flightStatus+'</span></td>\n' +
-                        '<td class="td-manage"><a title="编辑" onclick="member_edit(\'550\')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
+                        '<td class="td-manage"><a title="编辑" onclick="member_edit('+comment.id+')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
                         '</tr>';
                 });
                 $('#context').html(html);
@@ -468,7 +458,7 @@
 
 
     //初始化数据
-    window.onload =function() {
+    window.onload =function initFun(){
         $.ajax({
             type:"post",
             url:"/getFlightRecord.do",
@@ -492,7 +482,7 @@
                         '<td>'+comment.planLandTime+'</td>\n' +
                         '<td>'+comment.airportEnd+'</td>\n' +
                         '<td class="td-status"><span class="label label-success radius">'+comment.flightStatus+'</span></td>\n' +
-                        '<td class="td-manage"><a title="编辑" onclick="member_edit(\'550\')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
+                        '<td class="td-manage"><a title="编辑" onclick="member_edit('+comment.id+')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
                         '</tr>';
                 });
                 $('#context').html(html);
@@ -503,6 +493,208 @@
 
     /*-编辑*/
     function member_edit(id){
+        $.ajax({
+            url:"/getFlightRecordById.do?id="+id,
+            method:"post",
+            success:function (data) {
+                console.log(data);
+                $('#flightNo2').val(data.flightNo);
+                var date = new Date(data.doDate);
+                var month=(date.getMonth()+1);
+                var day=date.getDate();
+                var hour =date.getHours();
+                var minutes=date.getMinutes();
+                var seconds=date.getSeconds();
+
+                if (month >= 1 && month <= 9){
+                    month = "0" + month;
+                }
+                if (day >= 0 && day <= 9){
+                    day = "0" + day;
+                }
+                if (hour >= 0 && hour <= 9){
+                    hour = "0" + hour;
+                }
+                if (minutes >= 0 && minutes <= 9){
+                    minutes = "0" + minutes;
+                }
+                if (seconds >= 0 && seconds <= 9){
+                    seconds = "0" + seconds;
+                }
+                var date2 =date.getFullYear()+"-"+month+"-"+day+" "+hour+":"+minutes+":"+seconds;
+
+                $('#doDate').val(date2);
+                $('#airCode').val(data.airCode);
+                $('#airlineCompany').val(data.airlineCompany);
+                $('#no3').val(data.no);
+                $('#attribute').val(data.attribute);
+                $('#relationId').val(data.relationId);
+                $('#flightAgent').val(data.flightAgent);
+                $('#gate').val(data.gate);
+                $('#luggageTurnTable').val(data.luggageTurnTable);
+                $('#airportStart').val(data.airportStart);
+                $('#airportEndSpare').val(data.airportEndSpare);
+                $('#terminal').val(data.terminal);
+                $('#planTakeTime2').val(data.planTakeTime);
+                $('#realTakeTime').val(data.realTakeTime);
+                $('#planLandTime').val(data.planLandTime);
+                $('#realLandTime').val(data.realLandTime);
+                $('#removeTime').val(data.removeTime);
+                $('#blockTime').val(data.blockTime);
+                $('#flightDataId').val(data.id);
+                var  html="";
+                if(data.isFirst=='是'){
+                    html ="<option value=\"是\" selected>始发航班</option>\n" +
+                    " <option value=\"否\">非始发航班</option>"
+                }else{
+                    html ="<option value=\"是\" >始发航班</option>\n" +
+                        " <option value=\"否\" selected>非始发航班</option>"
+                }
+                $('#isFirst2').html(html);
+
+                var html2="";
+                if(data.flightStatus=='正常'){
+                    html2="<option value=\"延误\" >延误</option>\n" +
+                        "                    <option value=\"正常\" selected>正常</option>\n" +
+                        "                    <option value=\"取消\">取消</option>\n" +
+                        "                    <option value=\"备降\">备降</option>\n" +
+                        "                    <option value=\"返航\">返航</option>";
+                }
+                if(data.flightStatus=='取消'){
+                    html2="<option value=\"延误\" >延误</option>\n" +
+                        "                    <option value=\"正常\">正常</option>\n" +
+                        "                    <option value=\"取消\" selected>取消</option>\n" +
+                        "                    <option value=\"备降\">备降</option>\n" +
+                        "                    <option value=\"返航\">返航</option>";
+                }
+                if(data.flightStatus=='延误'){
+                    html2="<option value=\"延误\" selected>延误</option>\n" +
+                        "                    <option value=\"正常\">正常</option>\n" +
+                        "                    <option value=\"取消\">取消</option>\n" +
+                        "                    <option value=\"备降\">备降</option>\n" +
+                        "                    <option value=\"返航\">返航</option>";
+                }
+                if(data.flightStatus=='返航'){
+                    html2="<option value=\"延误\" >延误</option>\n" +
+                        "                    <option value=\"正常\">正常</option>\n" +
+                        "                    <option value=\"取消\">取消</option>\n" +
+                        "                    <option value=\"备降\">备降</option>\n" +
+                        "                    <option value=\"返航\" selected>返航</option>";
+                }
+                if(data.flightStatus=='备降'){
+                    html2="<option value=\"延误\" >延误</option>\n" +
+                        "                    <option value=\"正常\">正常</option>\n" +
+                        "                    <option value=\"取消\">取消</option>\n" +
+                        "                    <option value=\"备降\" selected>备降</option>\n" +
+                        "                    <option value=\"返航\">返航</option>";
+                }
+                $('#flightStatus2').html(html2);
+
+                var html3="";
+                if(data.nature=='国内航班'){
+                    html3="<option value=\"国内航班\" selected>国内航班</option>\n" +
+                        "                    <option value=\"国外航班\">国外航班</option>";
+                }else{
+                    html3="<option value=\"国内航班\" >国内航班</option>\n" +
+                        "                    <option value=\"国外航班\" selected>国外航班</option>";
+                }
+                $('#nature2').html(html3);
+
+                var html4="";
+                if(data.inOut=='进'){
+                    html4="<option value=\"进\" selected>进港</option>\n" +
+                        "<option value=\"出\">出港</option>";
+                }else{
+                    html4="<option value=\"进\" >进港</option>\n" +
+                        "<option value=\"出\" selected>出港</option>";
+                }
+                $('#inOut2').html(html4);
+
+
+                var html5=""
+                if(data.task=='退航'){
+                    html5=" <option value=\"退航\" selected>退航</option>\n" +
+                        "                    <option value=\"正班\">正班</option>\n" +
+                        "                    <option value=\"补班\">补班</option>\n" +
+                        "                    <option value=\"专机\">专机</option>\n" +
+                        "                    <option value=\"转场\">转场</option>\n" +
+                        "                    <option value=\"训练\">训练</option>"
+                }
+                if(data.task=='正班'){
+                    html5=" <option value=\"退航\" >退航</option>\n" +
+                        "                    <option value=\"正班\" selected>正班</option>\n" +
+                        "                    <option value=\"补班\">补班</option>\n" +
+                        "                    <option value=\"专机\">专机</option>\n" +
+                        "                    <option value=\"转场\">转场</option>\n" +
+                        "                    <option value=\"训练\">训练</option>"
+                }
+                if(data.task=='补班'){
+                    html5=" <option value=\"退航\" >退航</option>\n" +
+                        "                    <option value=\"正班\">正班</option>\n" +
+                        "                    <option value=\"补班\" selected>补班</option>\n" +
+                        "                    <option value=\"专机\" >专机</option>\n" +
+                        "                    <option value=\"转场\">转场</option>\n" +
+                        "                    <option value=\"训练\">训练</option>"
+                }
+                if(data.task=='专机'){
+                    html5=" <option value=\"退航\" >退航</option>\n" +
+                        "                    <option value=\"正班\">正班</option>\n" +
+                        "                    <option value=\"补班\">补班</option>\n" +
+                        "                    <option value=\"专机\" selected>专机</option>\n" +
+                        "                    <option value=\"转场\">转场</option>\n" +
+                        "                    <option value=\"训练\">训练</option>"
+                }
+                if(data.task=='转场'){
+                    html5=" <option value=\"退航\" >退航</option>\n" +
+                        "                    <option value=\"正班\">正班</option>\n" +
+                        "                    <option value=\"补班\">补班</option>\n" +
+                        "                    <option value=\"专机\">专机</option>\n" +
+                        "                    <option value=\"转场\" selected>转场</option>\n" +
+                        "                    <option value=\"训练\">训练</option>"
+                }
+                if(data.task=='训练'){
+                    html5=" <option value=\"退航\" >退航</option>\n" +
+                        "                    <option value=\"正班\">正班</option>\n" +
+                        "                    <option value=\"补班\">补班</option>\n" +
+                        "                    <option value=\"专机\">专机</option>\n" +
+                        "                    <option value=\"转场\">转场</option>\n" +
+                        "                    <option value=\"训练\" selected>训练</option>"
+                }
+               $('#task').html(html5);
+
+                var html6="";
+                if(data.delayRemark=='天气'){
+                    html6="  <option value=\"无\" >无</option>\n" +
+                        "                    <option value=\"天气\" selected>天气</option>\n" +
+                        "                    <option value=\"飞机\">飞机</option>\n" +
+                        "                    <option value=\"乘客\">乘客</option>";
+                }
+                if(data.delayRemark=='飞机'){
+                    html6="  <option value=\"无\" >无</option>\n" +
+                        "                    <option value=\"天气\" >天气</option>\n" +
+                        "                    <option value=\"飞机\" selected>飞机</option>\n" +
+                        "                    <option value=\"乘客\">乘客</option>";
+                }
+                if(data.delayRemark=='乘客'){
+                    html6="  <option value=\"无\" >无</option>\n" +
+                        "                    <option value=\"天气\">天气</option>\n" +
+                        "                    <option value=\"飞机\">飞机</option>\n" +
+                        "                    <option value=\"乘客\" selected>乘客</option>";
+                }
+                if(data.delayRemark=='无'){
+                    html6="  <option value=\"无\" selected>无</option>\n" +
+                        "                    <option value=\"天气\">天气</option>\n" +
+                        "                    <option value=\"飞机\">飞机</option>\n" +
+                        "                    <option value=\"乘客\">乘客</option>";
+                }
+                $('#delayRemark').html(html6);
+
+            }
+        });
+
+
+
+
         layer.open({
             type: 1,
             title: '修改航班动态信息',
@@ -528,7 +720,50 @@
                 });
                 if(num>0){  return false;}
                 else{
-                    $("#add_menber_form").submit();
+                    $.ajax({
+                        url:"/updateFlightRecord.do",
+                        data:{id:$('#flightDataId').val(),adultNum:$('#adultNum').val(),childNum:$('#childNum').val(),babyNum:$('#babyNum').val(),luggateNum:$('#luggateNum').val(),cargoWeight:$('#cargoWeight').val(),seat:$('#seat').val(),gate:$('#gate').val(),luggageTurnTable:$('#luggageTurnTable').val(),airportStart:$('#airportStart').val(),airportEndSpare:$('#airportEndSpare').val(),relationId:$('#relationId').val(),terminal:$('#terminal').val(),flightAgent:$('#flightAgent').val(),isFirst:$('#isFirst2').val(),flightStatus:$('#flightStatus2').val(),delayRemark:$('#delayRemark').val()},
+                        success:function (data) {
+                            console.log(data);
+                            if(data !='0'){
+
+                                $.ajax({
+                                    type:"post",
+                                    url:"/getFlightRecord.do",
+                                    success: function(data){
+                                        var jsonObectData = JSON.parse(data);
+                                        var html="";
+                                        $.each(jsonObectData, function(commentIndex, comment){
+                                            html +=' <tr>\n' +
+                                                '<td><label>\n' +
+                                                '<input type="checkbox" class="ace">\n' +
+                                                '<span class="lbl"></span></label></td>\n' +
+                                                '<td>'+comment.airCode+'</td>\n' +
+                                                '<td>'+comment.flightNo+'</td>\n' +
+                                                ' <td>'+comment.task+'</td>\n' +
+                                                '<td>'+comment.inOut+'</td>\n' +
+                                                '<td>'+comment.no+'</td>\n' +
+                                                '<td class="text-l">'+comment.attribute+'</td>\n' +
+                                                '<td>'+comment.nature+'</td>\n' +
+                                                '<td>'+comment.airportStart+'</td>\n' +
+                                                '<td>'+comment.planTakeTime+'</td>\n' +
+                                                '<td>'+comment.planLandTime+'</td>\n' +
+                                                '<td>'+comment.airportEnd+'</td>\n' +
+                                                '<td class="td-status"><span class="label label-success radius">'+comment.flightStatus+'</span></td>\n' +
+                                                '<td class="td-manage"><a title="编辑" onclick="member_edit('+comment.id+')" href="javascript:;"  class="btn btn-xs btn-info" ><i class="icon-edit bigger-120"></i></a>  </td>\n' +
+                                                '</tr>';
+                                        });
+                                        $('#context').html(html);
+                                    }
+                                });
+
+                            }
+                        }
+                    });
+
+
+
+
                     layer.alert('编辑成功！',{
                         title: '提示框',
                         icon:1,
@@ -548,6 +783,5 @@
             layer.msg('已删除!',{icon:1,time:1000});
         });
     }
-
 
 </script>
