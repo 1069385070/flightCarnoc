@@ -5,7 +5,7 @@
 
     <!--获得航班动态数据-->
     <select id="getFlightRecord" parameterType="FlightRecord" resultType="FlightRecord">
-        select * from f_flight_record where 1=1
+        select * from F_FLIGHT_RECORD where 1=1
         <if test="flightNo!=null and flightNo!=''">
             and FLIGHT_NO = #{flightNo}
         </if>
@@ -34,15 +34,35 @@
 
     <!--根据id获得航班动态数据-->
     <select id="getFlightRecordById" parameterType="int" resultType="FlightRecord">
-       SELECT * FROM f_flight_record WHERE ID =#{id}
+       SELECT * FROM F_FLIGHT_RECORD WHERE ID =#{id}
     </select>
 
     <!--根据id修改航班动态数据-->
     <update id="updateFlightRecord" parameterType="FlightRecord">
-        UPDATE f_flight_record
+        UPDATE F_FLIGHT_RECORD
         SET SEAT=#{seat},GATE=#{gate},LUGGAGE_TURNTABLE=#{luggageTurnTable},RELATION_ID=#{relationId},FLIGHT_AGENT=#{flightAgent},AIRPORT_START=#{airportStart},AIRPORT_END_SPARE=#{airportEndSpare},ADULT_NUM=#{adultNum},CHILD_NUM=#{childNum},BABY_NUM=#{babyNum},LUGGAGE_NUM=#{luggateNum},CARGO_WEIGHT=#{cargoWeight},DELAY_REMARK=#{delayRemark},TERMINAL=#{terminal},FLIGHT_STATUS=#{flightStatus},IS_FIRST=#{isFirst}
         WHERE ID=#{id}
     </update>
+
+
+    <!--获得因为各种原因的航班-->
+    <select id="getdelayRemark" resultMap="getdelayRemarkMap">
+        SELECT DISTINCT
+          (SELECT COUNT(DELAY_REMARK) FROM F_FLIGHT_RECORD WHERE FLIGHT_STATUS NOT IN("正常","备降","返航") AND DELAY_REMARK = '天气' AND REAL_LAND_TIME BETWEEN #{map.startDate} AND #{map.endDate}) AS WEATHER,
+          (SELECT COUNT(DELAY_REMARK) FROM F_FLIGHT_RECORD WHERE FLIGHT_STATUS NOT IN("正常","备降","返航") AND DELAY_REMARK = '乘客' AND REAL_LAND_TIME BETWEEN #{map.startDate} AND #{map.endDate}) AS PASSENGER,
+          (SELECT COUNT(DELAY_REMARK) FROM F_FLIGHT_RECORD WHERE FLIGHT_STATUS NOT IN("正常","备降","返航") AND DELAY_REMARK = '飞机' AND REAL_LAND_TIME BETWEEN #{map.startDate} AND #{map.endDate}) AS FLIGHT,
+          (SELECT COUNT(DELAY_REMARK) FROM F_FLIGHT_RECORD WHERE FLIGHT_STATUS NOT IN("正常","备降","返航") AND DELAY_REMARK = '军事' AND REAL_LAND_TIME BETWEEN #{map.startDate} AND #{map.endDate}) AS MILITARY
+        FROM F_FLIGHT_RECORD
+    </select>
+
+    <resultMap id="getdelayRemarkMap" type="Map">
+        <result property="weather" column="WEATHER" />
+        <result property="passenger" column="PASSENGER" />
+        <result property="flight" column="FLIGHT" />
+        <result property="military" column="MILITARY" />
+    </resultMap>
+
+
 
 
 </mapper>

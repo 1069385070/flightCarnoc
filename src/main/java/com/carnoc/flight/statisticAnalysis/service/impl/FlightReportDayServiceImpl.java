@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: hy
@@ -29,10 +30,20 @@ public class FlightReportDayServiceImpl implements FlightReportDayService {
         return flightReportDayDao.getFlightReportDay(id);
     }
 
-
+    @Override
+    public FlightReportDay getFlightReportDayDate(String startDate) {
+        return flightReportDayDao.getFlightReportDayDate(startDate);
+    }
 
     @Override
-    public FlightReportDay getFlightReportDayDate(String date) {
-        return flightReportDayDao.getFlightReportDayDate(date);
+    public List<FlightReportDay> getFlightReportDayNormal(Map map) {
+        return flightReportDayDao.getFlightReportDayNormal(map);
     }
+
+    @Override
+    public List<FlightReportDay> getFlightReportDayAll(Map map) {
+        return flightReportDayDao.getFlightReportDayAll(map);
+    }
+
+
 }

@@ -2,10 +2,12 @@ package com.carnoc.flight.flightInformation.service;
 
 import com.carnoc.flight.flightInformation.dao.FlightRecordDao;
 import com.carnoc.flight.flightInformation.pojo.FlightRecord;
+import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Resource;
 import java.security.PrivateKey;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 航班动态数据service接口类
@@ -36,5 +38,13 @@ public interface FlightRecordService {
      * @return
      */
     public int updateFlightRecord(FlightRecord flightRecord);
+
+
+    /**
+     * 获得因为各种原因的航班
+     * @param map
+     * @return
+     */
+    public Map getdelayRemark(@Param("map") Map map);
 
 }

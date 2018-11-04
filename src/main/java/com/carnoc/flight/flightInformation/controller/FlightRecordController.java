@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 航班动态数据控制器
@@ -96,6 +98,23 @@ public class FlightRecordController {
     public void updateFlightRecord(FlightRecord flightRecord,HttpServletResponse response) throws  IOException{
         String result = flightRecordService.updateFlightRecord(flightRecord)+"";
         response.getWriter().write(result);
+    }
+
+
+
+    @RequestMapping(value = "/getdelayRemark")
+    @ResponseBody
+    public Map getdelayRemark(Map map){
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        String addTimes = dateformat.format(System.currentTimeMillis()-86400000);
+
+        String startDate = addTimes+" 00:00:00";
+        String endDate = addTimes+" 23:59:59";
+        map.put("startDate",startDate);
+        map.put("endDate",endDate);
+        Map map1 = flightRecordService.getdelayRemark(map);
+        System.out.println(map1);
+        return map1;
     }
 
 

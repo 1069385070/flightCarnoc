@@ -9,5 +9,9 @@
 
         <!--解决数据库和实体类属性名字不一致-->
         <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+
+
+            <setting name="lazyLoadingEnabled" value="true"/>
+            <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 </configuration>

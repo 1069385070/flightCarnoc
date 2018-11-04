@@ -11,15 +11,17 @@ public class FlightReportWeekly implements Serializable {
 
     private Integer id;
     private int day;//统计标示 哪一天
+    private int normal_flights;//正常的数量
     private int flights;//航班架次
     private int passengers;//旅客数量
     private int cargoWeight;//货邮行重量
     private int rtype;//统计类型1进港2出港3过站
     private String addTime;//统计时间
 
-    public FlightReportWeekly(Integer id, int day, int flights, int passengers, int cargoWeight, int rtype, String addTime) {
+    public FlightReportWeekly(Integer id, int day, int normal_flights, int flights, int passengers, int cargoWeight, int rtype, String addTime) {
         this.id = id;
         this.day = day;
+        this.normal_flights = normal_flights;
         this.flights = flights;
         this.passengers = passengers;
         this.cargoWeight = cargoWeight;
@@ -27,14 +29,16 @@ public class FlightReportWeekly implements Serializable {
         this.addTime = addTime;
     }
 
-    public FlightReportWeekly(int day, int flights, int passengers, int cargoWeight, int rtype, String addTime) {
+    public FlightReportWeekly(int day, int normal_flights, int flights, int passengers, int cargoWeight, int rtype, String addTime) {
         this.day = day;
+        this.normal_flights = normal_flights;
         this.flights = flights;
         this.passengers = passengers;
         this.cargoWeight = cargoWeight;
         this.rtype = rtype;
         this.addTime = addTime;
     }
+
 
     public FlightReportWeekly() {
     }
@@ -53,6 +57,14 @@ public class FlightReportWeekly implements Serializable {
 
     public void setDay(int day) {
         this.day = day;
+    }
+
+    public int getNormal_flights() {
+        return normal_flights;
+    }
+
+    public void setNormal_flights(int normal_flights) {
+        this.normal_flights = normal_flights;
     }
 
     public int getFlights() {
@@ -95,11 +107,13 @@ public class FlightReportWeekly implements Serializable {
         this.addTime = addTime;
     }
 
+
     @Override
     public String toString() {
         return "FlightReportWeekly{" +
                 "id=" + id +
                 ", day=" + day +
+                ", normal_flights=" + normal_flights +
                 ", flights=" + flights +
                 ", passengers=" + passengers +
                 ", cargoWeight=" + cargoWeight +

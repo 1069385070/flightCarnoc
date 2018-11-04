@@ -58,7 +58,6 @@
         </thead>
         <tbody>
         <tr>
-
             <td>1</td>
             <td> 江西南昌航空公司</td>
             <td>aa</td>
@@ -67,50 +66,6 @@
             <td>1</td>
             <td >10%</td>
             <td>90%</td>
-        </tr>
-        <tr>
-
-            <td>2</td>
-            <td> 航空公司2</td>
-            <td>aa</td>
-            <td>10</td>
-            <td>1000</td>
-            <td>2</td>
-            <td >20%</td>
-            <td>80%</td>
-        </tr>
-        <tr>
-
-
-            <td>2</td>
-            <td> 航空公司2</td>
-            <td>aa</td>
-            <td>10</td>
-            <td>1000</td>
-            <td>2</td>
-            <td >20%</td>
-            <td>80%</td>
-        </tr> <tr>
-
-
-            <td>2</td>
-            <td> 航空公司2</td>
-            <td>aa</td>
-            <td>10</td>
-            <td>1000</td>
-            <td>2</td>
-            <td >20%</td>
-            <td>80%</td>
-        </tr> <tr>
-
-            <td>2</td>
-            <td> 航空公司2</td>
-            <td>aa</td>
-            <td>10</td>
-            <td>1000</td>
-            <td>2</td>
-            <td >20%</td>
-            <td>80%</td>
         </tr>
         </tbody>
     </table>
@@ -134,5 +89,14 @@
     function search_flight3() {
         $("#search_form3").submit();
     }
+
+
+    window.onload=function () {
+        $.ajax({
+            type:"post",
+
+        })
+    }
+
 
 </script>

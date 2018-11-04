@@ -1,9 +1,11 @@
 package com.carnoc.flight.flightInformation.dao;
 
 import com.carnoc.flight.flightInformation.pojo.FlightRecord;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 航班动态数据dao接口
@@ -38,5 +40,11 @@ public interface FlightRecordDao {
     public int updateFlightRecord(FlightRecord flightRecord);
 
 
+    /**
+     * 获得因为各种原因的航班
+     * @param map
+     * @return
+     */
+    public Map getdelayRemark(@Param("map") Map map);
 
 }

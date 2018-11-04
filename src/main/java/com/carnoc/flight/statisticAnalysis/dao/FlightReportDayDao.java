@@ -1,9 +1,11 @@
 package com.carnoc.flight.statisticAnalysis.dao;
 
 import com.carnoc.flight.statisticAnalysis.pojo.FlightReportDay;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 每日航班信息统计表
@@ -31,8 +33,25 @@ public interface FlightReportDayDao {
 
     /**
      * 查询过站的数据
-     * @param date
+     * @param startDate
      * @return
      */
-    public FlightReportDay getFlightReportDayDate(String date);
+    public FlightReportDay getFlightReportDayDate(String startDate);
+
+
+    /**
+     * 根据日期查询
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public List<FlightReportDay> getFlightReportDayNormal(@Param("map") Map map);
+
+
+    /**
+     * 获得所有的数据
+     * @param map
+     * @return
+     */
+    public List<FlightReportDay> getFlightReportDayAll(@Param("map") Map map);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 航班动态数据service实现类
@@ -46,6 +47,17 @@ public class FlightRecordServiceImpl  implements FlightRecordService{
      */
     public int updateFlightRecord(FlightRecord flightRecord){
         return flightRecordDao.updateFlightRecord(flightRecord);
+    }
+
+
+    /**
+     * 获得因为各种原因的航班
+     * @param map
+     * @return
+     */
+    @Override
+    public  Map getdelayRemark(Map map) {
+        return flightRecordDao.getdelayRemark(map);
     }
 
 }

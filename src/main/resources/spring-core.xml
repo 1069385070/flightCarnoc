@@ -36,7 +36,7 @@
         <property name="driverClass" value="${drivers}"></property>
         <property name="jdbcUrl" value="${url}"></property>
         <property name="user" value="${user}"></property>
-        <property name="password" value="${upwd}"></property>
+        <!--<property name="password" value="${upwd}"></property>-->
         <property name="initialPoolSize" value="${initPoolSize}"></property>
         <property name="maxPoolSize" value="${maxPoolSizes}"></property>
     </bean>

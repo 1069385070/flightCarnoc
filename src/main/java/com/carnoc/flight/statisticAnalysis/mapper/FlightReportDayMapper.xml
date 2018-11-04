@@ -15,7 +15,24 @@
 
 
     <select id="getFlightReportDayDate" parameterType="String" resultType="FlightReportDay">
-        SELECT FLIGHTS,NORMAL_FLIGHTS FROM F_FLIGHT_REPORT_DAY WHERE RTYPE=3 AND ADD_TIME=#{date}
+        SELECT FLIGHTS ,NORMAL_FLIGHTS FROM F_FLIGHT_REPORT_DAY WHERE RTYPE=3 AND ADD_TIME = #{startDate}
+
+    </select>
+
+    <select id="getFlightReportDayNormal" resultType="FlightReportDay">
+
+        SELECT SUM(FLIGHTS) AS FLIGHTS,SUM(NORMAL_FLIGHTS) AS NORMAL_FLIGHTS FROM F_FLIGHT_REPORT_DAY WHERE RTYPE=3 AND ADD_TIME >=#{map.startDate}
+         <if test="map.endDate!=null">
+             AND ADD_TIME &lt;= #{map.endDate}
+         </if>
+    </select>
+
+
+    <select id="getFlightReportDayAll" resultType="FlightReportDay">
+        SELECT ID,AIRLINE,DAY,FLIGHTS,NORMAL_FLIGHTS,PASSENGERS,CARGO_WEIGHT,RTYPE,ADD_TIME FROM F_FLIGHT_REPORT_DAY
+        <if test="map!=null">
+            WHERE ADD_TIME BETWEEN #{map.startDate} AND #{map.endDate}
+        </if>
     </select>
 
     <!--<resultMap id="flightReportDayMapper" type="com.carnoc.flight.statisticAnalysis.pojo.FlightReportDay">-->

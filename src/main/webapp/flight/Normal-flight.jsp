@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="../assets/css/ace.min.css" />
     <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-    <![endif]--><script src="js/jquery-1.9.1.min.js"></script><script src="js/lrtk.js" type="text/javascript" ></script>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]--><script src="../js/jquery-1.9.1.min.js"></script><script src="js/lrtk.js" type="text/javascript" ></script>
 
     <title>航班正常性</title>
 </head>
