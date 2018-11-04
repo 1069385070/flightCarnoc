@@ -15,10 +15,24 @@
 
     <!--查询所有的用户组-->
     <select id="selectAllAdminRole" parameterType="com.carnoc.flight.userManager.pojo.AdminRole" resultMap="AdminRoleBase">
-        select * from f_admin_role
+        select * from f_admin_role order by add_time desc
     </select>
     <!--添加一个用户组-->
     <insert id="addAdminRole" parameterType="com.carnoc.flight.userManager.pojo.AdminRole">
         insert into f_admin_role values (null,#{roleCode},#{name},null,#{addTime},#{roleState})
     </insert>
+    <!--根据条件修改用户组信息-->
+    <update id="updateAdminRole" parameterType="com.carnoc.flight.userManager.pojo.AdminRole">
+        update f_admin_role
+        <set>
+            <if test="menuId!=null">
+                menu_id=#{menuId},
+            </if>
+            <if test="roleState!=null">
+                role_state=#{roleState}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
 </mapper>

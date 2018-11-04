@@ -1,5 +1,7 @@
 package com.carnoc.flight.userManager.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.carnoc.flight.redis.RedisCache;
 import com.carnoc.flight.userManager.pojo.Menu;
 import com.carnoc.flight.userManager.service.MenuService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ import java.util.List;
 public class MenuController {
     @Resource
     private MenuService menuService;
+    @Resource
+    private RedisCache redisCache;
+
     @RequestMapping("/test")
     @ResponseBody
     public List<String> test(){
@@ -32,6 +37,14 @@ public class MenuController {
         System.out.println(stringList);
         return stringList;
     }
+    /**
+     * @Author Administrator
+     * @Description //TODO 查询所有的权限
+     * @Date 17:59 2018/11/1
+     * @Param []
+     * @return java.util.List<java.lang.Object>
+     * @exception
+     */
     @RequestMapping("/selectAllMenu")
     @ResponseBody
     public List<Object> selectAllMenu(){
@@ -39,7 +52,22 @@ public class MenuController {
         List<Menu> l1=new ArrayList<>();
         List<Menu> l2=new ArrayList<>();
         List<Menu> l3=new ArrayList<>();
-        List<Menu> menuList = menuService.selectMenuByMenuFId(0);
+        List<Menu> menuList =null;
+        //先从redis中获取
+//        String key="com.carnoc.flight.userManager.dao.MenuDao.selectMenuByMenuFId.menuFid";
+//        String data = redisCache.getDataFromRedis(key);
+//        if(data==null){
+//            //没有就查询数据库
+//            menuList=menuService.selectMenuByMenuFId(0);
+//            //先把集合对象转换成json
+//            String string = JSON.toJSONString(menuList);
+//            //把查询的结果放入到redis中
+//            redisCache.setDataToRedis(key,string);
+//        }else{
+//            //将data转换成对象集合
+//            menuList=JSON.parseArray(data,Menu.class);
+//        }
+        menuList=menuService.selectMenuByMenuFId(0);
         for(Menu menu:menuList){
             if(menu.getFid()==0){
                 l1.add(menu);

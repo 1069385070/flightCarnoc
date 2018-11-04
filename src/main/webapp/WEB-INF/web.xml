@@ -16,6 +16,11 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
 
+  <!--&lt;!&ndash;spring监听器&ndash;&gt;
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>-->
+
     
   <!--权限配置-->
   <filter>

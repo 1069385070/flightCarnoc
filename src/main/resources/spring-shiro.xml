@@ -11,17 +11,17 @@
 
     <!-- 配置缓存管理器 -->
     <!-- 用户授权信息Cache -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
-    <!--<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        &lt;!&ndash; 指定 ehcache 的配置文件，下面会给到 &ndash;&gt;
-        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
-    </bean>-->
+    <!--<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!-- 指定 ehcache 的配置文件，下面会给到 -->
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />
+    </bean>
 
     <!-- realm自定义认证授权类 -->
     <!-- 配置进行授权和认证的 Realm，要新增一个java类来实现，下面会有，class=包名.类名，init-methood是初始化的方法 -->
     <!--init-method="setCredentialMatcher"-->
-    <bean id="myRealm" class="com.carnoc.flight.userManager.shiro.MyRealm">
-        <property name="cacheManager" ref="cacheManager"></property>
+    <bean id="myRealm" class="com.carnoc.flight.userManager.shiro.MyRealm" init-method="setCredentialMatcher">
+        <!--<property name="cacheManager" ref="cacheManager"></property>-->
     </bean>
 
     <!-- shiro安全管理器 shiro核心-->
@@ -45,7 +45,14 @@
         <property name="successUrl" value="/index.jsp"></property>
         <!--当没有权限的时候，跳转到这个url-->
         <property name="unauthorizedUrl" value="/login.jsp" />
-
+        <!--自定义的filter-->
+        <property name="filters">
+            <map>
+                <!-- 将自定义 的FormAuthenticationFilter注入shiroFilter中 -->
+                <!--<entry key="authc" value-ref=""/>-->
+                <entry key="logout" value-ref="systemLogoutFilter"/>
+            </map>
+        </property>
         <!--过滤  -->
         <property name="filterChainDefinitions">
             <value>
@@ -57,10 +64,18 @@
                 <!--/** = authc-->
                 /login.jsp*=anon
                 /index.jsp*=authc
+                /flight/**=authc
                 /user.jsp = roles[user]
                 /admin.jsp = roles[admin]
+                /admin/** = roles[admin]
+                /logout = logout
             </value>
         </property>
+    </bean>
+
+    <!--配置要重定向的路径-->
+    <bean id="systemLogoutFilter" class="com.carnoc.flight.userManager.util.SystemLogoutFilter">
+        <property name="redirectUrl" value="/login.jsp"></property>
     </bean>
 
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
@@ -68,6 +83,10 @@
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+
+
+
+
 
 
 </beans>

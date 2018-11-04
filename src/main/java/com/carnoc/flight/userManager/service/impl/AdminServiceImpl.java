@@ -61,4 +61,56 @@ public class AdminServiceImpl implements AdminService {
     public int addAdmin(Admin admin) {
         return adminDao.addAdmin(admin);
     }
+    
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据用户id查询用户信息
+     * @Date 15:26 2018/10/29
+     * @Param [adminId]
+     * @return com.carnoc.flight.userManager.pojo.Admin
+     * @exception
+     */
+    @Override
+    public Admin selectAdminById(int adminId) {
+        return adminDao.selectAdminById(adminId);
+    }
+
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据条件修改用户信息
+     * @Date 16:39 2018/10/29
+     * @Param [admin]
+     * @return int
+     * @exception
+     */
+    @Override
+    public int updateAdmin(Admin admin) {
+        return adminDao.updateAdmin(admin);
+    }
+
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据条件查询查询某个用户组下的用户
+     * @Date 22:01 2018/10/29
+     * @Param [admin]
+     * @return java.util.List<java.util.Map < java.lang.String , java.lang.Object>>
+     * @exception
+     */
+    @Override
+    public List<Map<String, Object>> selectAdminByAdminRole(Admin admin) {
+        return adminDao.selectAdminByAdminRole(admin);
+    }
+
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据用户名修改密码
+     * @Date 14:37 2018/11/4
+     * @Param [admin]
+     * @return int
+     * @exception
+     */
+    @Override
+    public int updatePasswordByUsername(Admin admin) {
+        return adminDao.updatePasswordByUsername(admin);
+    }
 }

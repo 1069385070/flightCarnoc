@@ -9,11 +9,11 @@
     </resultMap>
 
     <select id="selectAdminByUsername" resultType="com.carnoc.flight.userManager.pojo.Admin">
-        select * from f_admin where username=#{username}
+        select * from f_admin where 1=1 and state=1 and username=#{username}
     </select>
 
     <select id="selectAllAdmin" resultType="map" parameterType="com.carnoc.flight.userManager.pojo.Admin">
-        select a.id,a.username,a.name,a.age,a.tel,a.qq,a.post,ar.name as roleName ,date_format(a.add_time,'%Y-%m-%d') as addTime,a.state from f_admin a ,f_admin_role ar where ar.id=a.role_id
+        select a.id,a.username,a.name,a.age,a.tel,a.qq,a.post,ar.name as roleName ,date_format(a.add_time,'%Y-%m-%d %H:%i:%s') as addTime,a.state from f_admin a ,f_admin_role ar where ar.id=a.role_id
         <if test="username!=null and username!=''">
             and a.username like '%${username}%'
         </if>
@@ -28,10 +28,113 @@
                 and a.post=#{post}
             </if>
         </if>
+        <if test="roleId!=null and roleId!=''">
+            and a.role_id=#{roleId}
+        </if>
+        order by a.add_time desc
+
     </select>
     <!--添加一个用户-->
     <insert id="addAdmin" parameterType="com.carnoc.flight.userManager.pojo.Admin">
         insert into f_admin values(null,null,#{username},#{password},#{name},#{sex},#{age},#{post},#{qq},#{tel},#{email},null,#{roleId},#{state},#{addTime},null,null)
     </insert>
+    <!--根据用户id查询用户信息-->
+    <select id="selectAdminById" parameterType="int" resultType="com.carnoc.flight.userManager.pojo.Admin">
+        select * from f_admin where id=#{adminId}
+    </select>
+
+    <!--根据条件查询查询某个用户组下的用户-->
+    <select id="selectAdminByAdminRole" parameterType="com.carnoc.flight.userManager.pojo.Admin">
+        select * from f_admin a ,f_admin_role ar where a.role_id=ar.id
+        <if test="id!=null and id!=''">
+            and role_id=#{id}
+        </if>
+    </select>
+
+    <!--根据条件修改用户信息set state=#{state} where id=#{id}-->
+    <update id="updateAdmin">
+        update f_admin
+        <set>
+            <if test="username!=null">
+                username=#{username},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="password!=null">
+                password=#{password},
+            </if>
+            <if test="qq!=null">
+                qq=#{qq},
+            </if>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="tel!=null">
+                tel=#{tel},
+            </if>
+            <if test="post!=null">
+                <if test="post!='--所有--'">
+                    post=#{post},
+                </if>
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="sex!=null">
+                sex=#{sex},
+            </if>
+            <if test="roleId!=null">
+                role_id=#{roleId},
+            </if>
+            <if test="state!=null">
+                state=#{state}
+            </if>
+
+        </set>
+
+        where id=#{id}
+    </update>
+
+    <update id="updatePasswordByUsername" parameterType="com.carnoc.flight.userManager.pojo.Admin">
+        update f_admin set password=#{password} where username=#{username}
+    </update>
+
+    <!--<set>
+        <if test="username!=null and username!=''">
+            username=#{username},
+        </if>
+        <if test="name!=null and name!='null'">
+            name=#{name},
+        </if>
+        <if test="qq!=null and qq!='null'">
+            qq=#{qq},
+        </if>
+        <if test="email!=null and email!='null'">
+            email=#{email},
+        </if>
+        <if test="tel!=null and tel!='null'">
+            tel=#{tel},
+        </if>
+        <if test="post!=null and post!='null'">
+            <if test="post!='&#45;&#45;所有&#45;&#45;'">
+                post=#{post},
+            </if>
+        </if>
+        <if test="age!=null and age!=''">
+            age=#{age},
+        </if>
+        <if test="sex!=null and sex!='null'">
+            sex=#{sex},
+        </if>
+        <if test="roleId!=null and roleId!=''">
+            role_id=#{roleId},
+        </if>
+        <if test="state!=null and state!=''">
+            state=#{state}
+        </if>
+    </set>-->
+
+
 
 </mapper>

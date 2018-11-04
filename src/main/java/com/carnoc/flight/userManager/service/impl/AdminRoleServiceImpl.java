@@ -47,4 +47,17 @@ public class AdminRoleServiceImpl implements AdminRoleService {
     public int addAdminRole(AdminRole adminRole) {
         return adminRoleDao.addAdminRole(adminRole);
     }
+    
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据条件修改用户组信息
+     * @Date 20:25 2018/10/29
+     * @Param [adminRole]
+     * @return int
+     * @exception
+     */
+    @Override
+    public int updateAdminRole(AdminRole adminRole) {
+        return adminRoleDao.updateAdminRole(adminRole);
+    }
 }

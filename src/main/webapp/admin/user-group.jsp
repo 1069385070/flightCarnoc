@@ -42,7 +42,7 @@
 <body>
 <div class="margin clearfix">
     <div class="Shops_Audit">
-        <div class="border clearfix"> <span class="l_f"> <a href="javascript:" id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户</a> </span> <span class="r_f" id="count"></span> </div>
+        <div class="border clearfix"> <span class="l_f"> <a href="javascript:" id="member_add" class="btn btn-warning"><i class="icon-plus"></i>添加用户组</a> </span> <span class="r_f" id="count"></span> </div>
         <!--申请列表-->
         <div class="audit_list">
             <table class="table table-striped table-bordered table-hover" id="sample-table">
@@ -234,6 +234,7 @@
 </body>
 </html>
 <script>
+    var n1=0;
     $().ready(function() {
         selectAllAdminRole();
 
@@ -267,11 +268,11 @@
                     $.each(menu, function (index1,element1) {
                         if (element.id==element1.fid){
                             str1+="<dl class='cl permission-list2'>";
-                            str1+="<dt><label class='middle'><input type='checkbox' value='"+element1.id+"' class='ace'  name='user-Character-0-0' id='id-disable-check'><span class='lbl'>"+element1.name+"</span></label></dt>";
+                            str1+="<dt><label class='middle'><input type='checkbox' value='"+element1.id+"' class='ace'  name='user-Character-0-"+index1+"' id='id-disable-check'><span class='lbl'>"+element1.name+"</span></label></dt>";
                             str1+="<dd>";
                             $.each(menu2, function (index2,element2) {
                                 if (element2.fid==element1.id){
-                                    str2+="<label class='middle'><input type='checkbox' value='"+element2.id+"' class='ace' name='user-Character-0-0-0' id='user-Character-0-0-0'><span class='lbl'>"+element2.name+"</span></label>";
+                                    str2+="<label class='middle'><input type='checkbox' value='"+element2.id+"' class='ace' name='user-Character-0-0-0' id='user-Character-0-0-"+index2+"'><span class='lbl'>"+element2.name+"</span></label>";
                                 }
                             });
                             str1+=str2;
@@ -328,8 +329,8 @@
                 var arr=$("input[type='checkbox']");
                     for (var i = 0; i < arr.length; i++) {
                     if(arr[i].checked==true){
-                        var str=arr[i].value
-                        s+=str+","
+                        str=arr[i].value+",";
+                        s+=str;
                     }
                 }
                 if (s=="") {
@@ -338,12 +339,30 @@
                         icon:0,
                     });
                 }else{
-                    alert(s);
-                    layer.alert('修改成功！',{
-                        title: '提示框',
-                        icon:1,
+                    s = s.substring(0,s.lastIndexOf(","))
+                    $.ajax({
+                        url: '/updateAdminRole.do',
+                        type: 'post',  // 请求类型
+                        data: {"menuId":s,"id":id},  // post时请求体
+                        dataType: 'json',  // 返回请求的类型，有text/json两种
+                        async: true,   // 是否异步
+                        /*  cache: true,   // 是否缓存 */
+                        timeout:null,  // 设置请求超时
+                        contentType: 'application/x-www-form-urlencoded',
+                        success:function(data){
+
+                            if (data>0){
+                                layer.alert('修改成功！',{
+                                    title: '提示框',
+                                    icon:1,
+                                });
+                                layer.close(index);
+                                selectAllAdminRole()
+                            }
+
+                        }
                     });
-                    layer.close(index);
+
                 }
 
 
@@ -373,12 +392,13 @@
     }
     /*用户组-添加*/
     $('#member_add').on('click', function(){
+        document.getElementById("add_menber_style").reset();
         layer.open({
             type: 1,
             title: '添加用户组',
             maxmin: true,
             shadeClose: true, //点击遮罩关闭层
-            area : ['800px' , '300px'],
+            area : ['800px' , '200px'],
             content:$('#add_menber_style'),
             btn:['提交','取消'],
             yes:function(index,layero){
@@ -409,7 +429,6 @@
                         contentType: 'application/x-www-form-urlencoded',
                         success:function(data){
                             if (data>0){
-                                alert(123)
                                 layer.alert('添加成功！',{
                                     title: '提示框',
                                     icon:1,
@@ -428,21 +447,73 @@
     /*用户组-停用*/
     function member_stop(obj,id){
         layer.confirm('确认要停用吗？',function(index){
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="icon-ok  bigger-120"></i></a>');
+
+           //updateAdminRole({"id":id,"roleState":0});
+            $.ajax({
+                url: '/updateAdminRole.do',
+                type: 'post',  // 请求类型
+                data:{"id":id,"roleState":0},  // post时请求体
+                dataType: 'json',  // 返回请求的类型，有text/json两种
+                async: true,   // 是否异步
+                /*  cache: true,   // 是否缓存 */
+                timeout:null,  // 设置请求超时
+                contentType: 'application/x-www-form-urlencoded',
+                success:function(data){
+                    n1 = data;
+                    console.log("进来了");
+                    console.log(n1);
+                    if (n1=='-1'){
+                        layer.msg('不能停用!',{icon: 5,time:1000});
+                    }
+                    if (n1>0){
+                        $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="icon-ok  bigger-120"></i></a>');
+                        $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
+                        $(obj).remove();
+                        layer.msg('已停用!',{icon: 5,time:1000});
+                    }
+                }
+            });
+
+
+        });
+
+    }
+
+    function a(){
+        console.log(n1);
+        if (n1=='-1'){
+            layer.msg('不能停用!',{icon: 5,time:1000});
+        }
+        if (n1>0){
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs " onClick="member_start(this,'+id+')" href="javascript:;" title="启用"><i class="icon-ok  bigger-120"></i></a>');
             $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
             $(obj).remove();
             layer.msg('已停用!',{icon: 5,time:1000});
-        });
-
+        }
     }
 
     /*用户组-启用*/
     function member_start(obj,id){
         layer.confirm('确认要启用吗？',function(index){
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="icon-ok bigger-120"></i></a>');
+
+            updateAdminRole({"id":id,"roleState":1});
+            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="icon-ok bigger-120"></i></a>');
             $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
             $(obj).remove();
             layer.msg('已启用!',{icon: 6,time:1000});
+            //alert(n);
+            /*if (n == -1){
+                layer.msg('不能启用!',{icon: 5,time:1000});
+                n = 0;
+            }*/
+           /* if (n>0){
+                $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" class="btn btn-xs btn-success" onClick="member_stop(this,'+id+')" href="javascript:;" title="停用"><i class="icon-ok bigger-120"></i></a>');
+                $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+                $(obj).remove();
+                layer.msg('已启用!',{icon: 6,time:1000});
+                n = 0;
+            }*/
+
         });
     }
     function selectAllAdminRole(){
@@ -458,24 +529,62 @@
             success:function(data){
                 var str="";
                 var state="";
+                var spanclass="";
+                var statecontent="";
                 $("#count").html("共：<b>"+data.length+"</b>条");
                 $.each(data, function (index,element) {
                     if (element.roleState==1){
                         state="已启用";
+                        spanclass="label label-success radius";
+                        statecontent="<a onClick='member_stop(this,"+element.id+")'  href='javascript:;' title='停用'  class='btn btn-xs btn-success'><i class='icon-ok bigger-120'></i>";
                     }
                     if (element.roleState==0){
                         state="已停用";
+                        spanclass="label label-defaunt radius";
+                        statecontent="<a onClick='member_start(this,"+element.id+")'  href='javascript:;' title='启用'  class='btn btn-xs '><i class='icon-ok bigger-120'></i>";
                     }
                     str+="<tr><td><label><input type='checkbox' class='ace'><span class='lbl'></span></label></td>";
-                    str+="<td>"+element.roleCode+"</td><td>"+element.name+"</td><td class='td-status'><span class='label label-success radius'>"+state+"</span></td>";
-                    str+="<td class='td-manage'><a onClick='member_stop(this,"+element.id+")'  href='javascript:;' title='停用'  class='btn btn-xs btn-success'><i class='icon-ok bigger-120'></i></a>";
-                    str+="<a title='用户组详情' href='user-group-list.jsp' class='btn btn-xs btn-info Refund_detailed'>用户组详情</a>";
+                    str+="<td>"+element.roleCode+"</td><td>"+element.name+"</td><td class='td-status'><span class='"+spanclass+"'>"+state+"</span></td>";
+                    str+="<td class='td-manage'>"+statecontent+"</a>";
+                    str+="<a title='用户组详情' href='user-group-list.jsp?roleId="+element.id+"' class='btn btn-xs btn-info Refund_detailed'>用户组详情</a>";
                     str+="<a title='修改权限' href='javascript:;'  onclick='member_edit("+element.id+")' class='btn btn-xs btn-warning'>修改权限</a></td></tr>";
                 });
                 $("#tbody").html(str);
                 //console.log(data)
             }
         });
+    }
+    function updateAdminRole(param){
+        // $.ajax({
+        //     url: '/selectAdminByAdminRole.do',
+        //     type: 'post',  // 请求类型
+        //     data: {"roleId":id},  // post时请求体
+        //     dataType: 'json',  // 返回请求的类型，有text/json两种
+        //     async: true,   // 是否异步
+        //     /*  cache: true,   // 是否缓存 */
+        //     timeout:null,  // 设置请求超时
+        //     contentType: 'application/x-www-form-urlencoded',
+        //     success:function(data){
+        //         //alert(data.length)
+        //         if (data.length)
+        //     }
+        // });
+        $.ajax({
+            url: '/updateAdminRole.do',
+            type: 'post',  // 请求类型
+            data: param,  // post时请求体
+            dataType: 'json',  // 返回请求的类型，有text/json两种
+            async: true,   // 是否异步
+            /*  cache: true,   // 是否缓存 */
+            timeout:null,  // 设置请求超时
+            contentType: 'application/x-www-form-urlencoded',
+            success:function(data){
+                n1 = data;
+                console.log("进来了");
+                console.log(n1);
+            }
+        });
+        return n1;
     }
 </script>
 

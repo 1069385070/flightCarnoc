@@ -19,13 +19,15 @@ public class Menu implements Serializable {
     private String name ;       //'栏目名称',
     private String url ;        //'栏目路径',
     private String menuCode;    //权限编码
+    private String icon;        //图标
 
-    public Menu(Integer id, Integer fid, String name, String url, String menuCode) {
+    public Menu(Integer id, Integer fid, String name, String url, String menuCode, String icon) {
         this.id = id;
         this.fid = fid;
         this.name = name;
         this.url = url;
         this.menuCode = menuCode;
+        this.icon = icon;
     }
 
     public Menu() {
@@ -71,6 +73,14 @@ public class Menu implements Serializable {
         this.menuCode = menuCode;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
@@ -79,6 +89,7 @@ public class Menu implements Serializable {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", menuCode='" + menuCode + '\'' +
+                ", icon='" + icon + '\'' +
                 '}';
     }
 }

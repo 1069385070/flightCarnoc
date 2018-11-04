@@ -31,6 +31,14 @@ public class LoginController {
     private static Logger logger= LogManager.getLogger(LoginController.class);
     @Resource
     private MenuService menuService;
+    /**
+     * @Author Administrator
+     * @Description //TODO Administrator
+     * @Date 19:49 2018/11/1
+     * @Param [admin, request]
+     * @return java.lang.String
+     * @exception
+     */
     @RequestMapping("/login")
     public String login(Admin admin, HttpServletRequest request){
         System.out.println(admin);
@@ -44,33 +52,35 @@ public class LoginController {
         try {
             //执行认证操作.
             subject.login(usernamePasswordToken);
+            subject.hasRole("sss");
         }
         catch (UnknownAccountException ua){
             logger.info("没有指定的账户："+ua.getMessage());
-            return "login.jsp";
+            return "redirect:login.jsp";
         }
         catch (IncorrectCredentialsException ic){
             logger.info("密码不匹配 ："+ic.getMessage());
-            return "login.jsp";
+            return "redirect:login.jsp";
         }
         catch (LockedAccountException la){
             logger.info("用户被锁定  ："+la.getMessage());
-            return "login.jsp";
+            return "redirect:login.jsp";
         }
         catch (AuthenticationException ae){
             logger.info("登录失败："+ae.getMessage());
-            return "login.jsp";
+            return "redirect:login.jsp";
         }
+        System.out.println(subject.getPrincipal());
 //        // 执行登出，调用Subject的Logout()方法
 //        subject.logout();
 //
 //        //安全退出
 //        System.exit(0);
-        HttpSession session = request.getSession();
-        Admin admins = (Admin) SecurityUtils.getSubject().getPrincipal();
-        List<Menu> menuList = menuService.selectMenuByAdminUsername(admin.getUsername());
-        session.setAttribute("menuList",menuList);
-        session.setAttribute("admins",admins);
-        return "index.jsp";
+//        HttpSession session = request.getSession();
+//        Admin admins = (Admin) SecurityUtils.getSubject().getPrincipal();
+//        List<Menu> menuList = menuService.selectMenuByAdminUsername(admin.getUsername());
+//        session.setAttribute("menuList",menuList);
+//        session.setAttribute("admins",admins);
+        return "redirect:index.jsp";
     }
 }

@@ -39,6 +39,9 @@
     <script type="text/javascript">
         if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"script>");
     </script>
+
+    <script src="assets/layer/layer.js" type="text/javascript" ></script>
+    <script type="text/javascript" src="js/H-ui.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <!--<script src="assets/js/typeahead-bs2.min.js"></script>-->
     <!--[if lte IE 8]>
@@ -47,7 +50,14 @@
     <!--<script src="assets/js/ace-elements.min.js"></script>-->
     <script src="assets/js/ace.min.js"></script>
 
-
+    <%--<script src="../lib/jquery.js"></script>--%>
+    <script src="/jquery-validation-1.18.0/dist/jquery.validate.min.js"></script>
+    <script src="./jquery-validation-1.18.0/dist/localization/messages_zh.js"></script>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
     <script type="text/javascript">
         $(function(){
             var cid = $('#nav_list> li>.submenu');
@@ -130,8 +140,7 @@
                         icon:2,
                     },
                     function(){
-                        location.href="login.jsp";
-
+                        location.href="/logout";
                     });
             });
         });
@@ -173,17 +182,18 @@
             <ul class="nav ace-nav">
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <%--<shiro:user>
+                        <shiro:user>
                             <span  class="time"><em id="time"></em></span><span class="user-info"><small>欢迎光临</small>[<shiro:principal/>]</span>
-                        </shiro:user>--%>
-                        <span  class="time"><em id="time"></em></span><span class="user-info"><small>欢迎光临,</small>超级管理员</span>
+                            <input id="username" type="hidden" value="<shiro:principal/>">
+                        </shiro:user>
+                        <%--<span  class="time"><em id="time"></em></span><span class="user-info"><small>欢迎光临,</small>超级管理员</span>--%>
                         <i class="icon-caret-down"></i>
                     </a>
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 
-                        <li><a href="javascript:void(0)" name="admin_info.jsp" title="个人信息" class="iframeurl"><i class="icon-user"></i>个人资料</a></li>
+                        <li><a href="javascript:void(0)" title="个人信息" class="iframeurl" id="updatepassword"><i class="icon-user"></i>个人资料</a></li>
                         <li class="divider"></li>
-                        <li><a href="javascript:ovid(0)" id="Exit_system"><i class="icon-off"></i>退出</a></li>
+                        <li><a href="javascript:void(0)" id="Exit_system"><i class="icon-off"></i>退出</a></li>
                     </ul>
                 </li>
 
@@ -215,22 +225,47 @@
             <!-- #sidebar-shortcuts -->
             <div id="menu_style" class="menu_style">
                 <ul class="nav nav-list" id="nav_list">
-                    <li class="home"><a href="javascript:void(0)" name="Flight-dynamics.jsp" class="iframeurl" title="航班动态信息 "><i class="icon-home"></i><span class="menu-text"> 航班动态信息 </span></a></li>
+                    <c:forEach items="${sessionScope.menuList}" var="list">
+                        <c:if test="${list.fid==0}">
+                            <c:if test="${list.id==1}">
+                                <li class="home"><a href="javascript:void(0)" name="${list.url}" class="iframeurl" title="${list.name}"><i class="${list.icon}"></i><span class="menu-text">${list.name}</span></a></li>
+                            </c:if>
+                            <c:if test="${list.id!=1}">
+                                <li>
+                                    <c:if test="${list.url==null}">
+                                        <a href="#" class="dropdown-toggle"><i class="${list.icon}"></i><span class="menu-text">${list.name} </span><b class="arrow icon-angle-down"></b></a>
+                                    </c:if>
+                                    <c:if test="${list.url!=null}">
+                                        <li><a href="javascript:void(0)" name="${list.url}" class="iframeurl" title="${list.name}"><i class="${list.icon}"></i><span class="menu-text">${list.name}</span></a></li>
+                                    </c:if>
+                                    <ul class="submenu">
+                                        <c:forEach items="${sessionScope.menuList}" var="li">
+                                            <c:if test="${li.fid==list.id}">
+                                                <li class="home"><a href="javascript:void(0)" name="${li.url}" title="${li.name}" class="iframeurl"><i class="icon-double-angle-right"></i>${li.name}</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+
+                            </c:if>
+                        </c:if>
+                    </c:forEach>
+                    <%--<li class="home"><a href="javascript:void(0)" name="/flight/Flight-dynamics.jsp" class="iframeurl" title="航班动态信息 "><i class="icon-home"></i><span class="menu-text"> 航班动态信息 </span></a></li>
 
                     <li>
                         <a href="#" class="dropdown-toggle"><i class="icon-credit-card"></i><span class="menu-text"> 数据采集 </span><b class="arrow icon-angle-down"></b></a>
                         <ul class="submenu">
-                            <li class="home"><a href="javascript:void(0)" name="Automatic-collection.jsp" title="自动采集" class="iframeurl"><i class="icon-double-angle-right"></i>自动采集</a></li>
-                            <li class="home"><a href="javascript:void(0)" name="BD-maintenance.jsp" title="基础数据维护" class="iframeurl"><i class="icon-double-angle-right"></i>基础数据维护</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/flight/Automatic-collection.jsp" title="自动采集" class="iframeurl"><i class="icon-double-angle-right"></i>自动采集</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/flight/BD-maintenance.jsp" title="基础数据维护" class="iframeurl"><i class="icon-double-angle-right"></i>基础数据维护</a></li>
 
                         </ul>
                     </li>
                     <li>
                         <a href="#" class="dropdown-toggle"><i class="icon-user"></i><span class="menu-text"> 统计分析 </span><b class="arrow icon-angle-down"></b></a>
                         <ul class="submenu">
-                            <li class="home"><a href="javascript:void(0)" name="Normal-flight.jsp" title="航班正常性"  class="iframeurl"><i class="icon-double-angle-right"></i>航班正常性</a></li>
-                            <li class="home"><a href="javascript:void(0)" name="Aviation-resources.jsp" title="航保资源统计"  class="iframeurl"><i class="icon-double-angle-right"></i>航保资源统计</a></li>
-                            <li class="home"><a href="javascript:void(0)" name="business-analysis.jsp" title="经营分析统计"  class="iframeurl"><i class="icon-double-angle-right"></i>经营分析统计</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/flight/Normal-flight.jsp" title="航班正常性"  class="iframeurl"><i class="icon-double-angle-right"></i>航班正常性</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/flight/Aviation-resources.jsp" title="航保资源统计"  class="iframeurl"><i class="icon-double-angle-right"></i>航保资源统计</a></li>
+                            <li class="home"><a href="javascript:void(0)" name="/flight/business-analysis.jsp" title="经营分析统计"  class="iframeurl"><i class="icon-double-angle-right"></i>经营分析统计</a></li>
 
                         </ul>
                     </li>
@@ -246,7 +281,7 @@
                     </li>
                     <li><a href="#" class="dropdown-toggle"><i class="icon-cogs"></i><span class="menu-text"> 数据导出 </span> </a>
 
-                    </li>
+                    </li>--%>
 
                 </ul>
             </div>
@@ -273,7 +308,7 @@
                 </ul>
             </div>
 
-            <iframe id="iframe" style="border:0; width:100%; background-color:#FFF;"name="iframe" frameborder="0" src="Flight-dynamics.jsp">  </iframe>
+            <iframe id="iframe" style="border:0; width:100%; background-color:#FFF;"name="iframe" frameborder="0" src="flight/Flight-dynamics.jsp">  </iframe>
 
 
             <!-- /.page-content -->
@@ -290,17 +325,131 @@
     <p class="r_f">地址：xxxxxx  邮编：xxxxxx 技术支持：xxxx</p>
 </div>
 <!--修改密码样式-->
-<div class="change_Pass_style" id="change_Pass">
-    <ul class="xg_style">
-        <li><label class="label_name">原&nbsp;&nbsp;密&nbsp;码</label><input name="原密码" type="password" class="" id="password"></li>
-        <li><label class="label_name">新&nbsp;&nbsp;密&nbsp;码</label><input name="新密码" type="password" class="" id="Nes_pas"></li>
-        <li><label class="label_name">确认密码</label><input name="再次确认密码" type="password" class="" id="c_mew_pas"></li>
-    </ul>
+<div class="add_menber" id="add_menber_style">
+<%--<div class="change_Pass_style" id="change_Pass">--%>
+    <form method="post" id="commentForm" class="cmxform" action="/updatePassword.do">
+        <input type="hidden" name="username" id="username1"/>
+        <ul class="xg_style">
+            <li><label class="label_name">原&nbsp;&nbsp;密&nbsp;码</label><input name="firstPassword" type="password" class="" id="firstPassword" onblur="judgePassword()"><span id="firstPasswordId"></span></li>
+            <li style="display: none" id="l1"><label class="label_name">新&nbsp;&nbsp;密&nbsp;码</label><input name="password" type="password" class="" id="password" ></li>
+            <li style="display: none" id="l2"><label class="label_name">确认密码</label><input name="confirm_password" type="password" class="" id="confirm_password" ></li>
+        </ul>
+    <div style="display: none"><input type="submit" name="" id="" ></div>
+    </form>
+    <%--</div>--%>
 </div>
 <!-- /.main-container -->
 <!-- basic scripts -->
 
 </body>
+<script type="text/javascript">
+    $('#updatepassword').on('click', function(){
+        document.getElementById("commentForm").reset();
+        layer.open({
+            type: 1,
+            title: '修改密码',
+            maxmin: true,
+            shadeClose: true, //点击遮罩关闭层
+            area : ['800px' , ''],
+            content:$('#add_menber_style'),
+            btn:['提交','取消'],
+            //submit:['提交','取消'],
+            yes:function(index,layero){
+                // var num=0;
+                // var str="";
+                // $(".add_menber input[type$='text']").each(function(n){
+                //     if($(this).val()=="")
+                //     {
+                //
+                //         layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
+                //             title: '提示框',
+                //             icon:0,
+                //         });
+                //         num++;
+                //         return false;
+                //     }
+                //
+                // });
+                // if(num>0){  return false;}
+                // else{
+                //
+                //
+                // }
+                alert(123);
+                $("#commentForm").submit();
+                //layer.msg('已删除!',{icon:1,time:1000});
+                // $("#commentForm").validate({
+				// 	submitHandler: function(form) {
+				// 		alert("提交事件!");
+				// 		form.submit();
+				// 	}
+				// });
+            }
+        });
+    });
+        $("#commentForm").validate({
+            rules:{
+                firstPassword:{
+                    required:true,
+                    minlength:6
+                },
+                password:{
+                    required:true,
+                    minlength:6
+                },
+                confirm_password:{
+                    required:true,
+                    minlength:6,
+                    equalTo:"#password"
+                }
+            },
+            messages:{
+                firstPassword:{
+                    required:"请输入密码",
+                    minlength:"密码长度不能小于6个字母"
+                },
+                password:{
+                    required:"请输入密码",
+                    minlength:"密码长度不能小于6个字母"
+                },
+                confirm_password:{
+                    required:"请输入密码",
+                    minlength:"密码长度不能小于6个字母",
+                    equalTo:"两次密码输入不一致"
+                }
+            }
+        });
+
+    function judgePassword(){
+        var password=$("#firstPassword").val();
+        var username=$("#username").val();
+        $("#username1").val(username);
+        if (password.length>5){
+            $.ajax({
+                url: '/judgeUsernameExit.do',
+                type: 'post',  // 请求类型
+                data: {"password":password,"username":username},  // post时请求体
+                dataType: 'text',  // 返回请求的类型，有text/json两种
+                async: true,   // 是否异步
+                /*  cache: true,   // 是否缓存 */
+                timeout:null,  // 设置请求超时
+                contentType: 'application/x-www-form-urlencoded',
+                success:function(data){
+                    alert(data)
+                    if (data==1){
+                        $("#firstPasswordId").html("原密码错误，请重新输入！");
+                        document.getElementById("firstPasswordId").className="error";
+                    }else{
+                        $("#firstPasswordId").html("");
+                        document.getElementById("firstPasswordId").className="";
+                        document.getElementById("l1").style="";
+                        document.getElementById("l2").style="";
+                    }
+                }
+            });
+        }
+    }
+</script>
 </html>
 
 

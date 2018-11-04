@@ -1,7 +1,9 @@
 package com.carnoc.flight.userManager.controller;
 
+import com.carnoc.flight.userManager.pojo.Admin;
 import com.carnoc.flight.userManager.pojo.AdminRole;
 import com.carnoc.flight.userManager.service.AdminRoleService;
+import com.carnoc.flight.userManager.service.AdminService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,6 +12,7 @@ import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: AdminRoleController
@@ -25,6 +28,9 @@ import java.util.List;
 public class AdminRoleController {
     @Resource
     private AdminRoleService adminRoleService;
+
+    @Resource
+    private AdminService adminService;
     /**
      * @Author Administrator
      * @Description //TODO 查询所有的用户组
@@ -39,6 +45,14 @@ public class AdminRoleController {
         List<AdminRole> adminRoleList = adminRoleService.selectAllAdminRole(adminRole);
         return adminRoleList;
     }
+    /**
+     * @Author Administrator
+     * @Description //TODO 添加一个用户
+     * @Date 20:30 2018/10/29
+     * @Param [adminRole]
+     * @return java.lang.String
+     * @exception
+     */
     @RequestMapping("/addAdminRole")
     @ResponseBody
     public String addAdminRole(AdminRole adminRole){
@@ -48,6 +62,34 @@ public class AdminRoleController {
         adminRole.setRoleState(1);
         adminRole.setAddTime(date);
         int i = adminRoleService.addAdminRole(adminRole);
+        return i+"";
+    }
+    /**
+     * @Author Administrator
+     * @Description //TODO 根据条件修改用户组信息
+     * @Date 20:14 2018/10/30
+     * @Param [adminRole]
+     * @return java.lang.String
+     * @exception
+     */
+    @RequestMapping("/updateAdminRole")
+    @ResponseBody
+    public String updateAdminRole(AdminRole adminRole){
+        System.out.println(adminRole);
+        int i =0;
+        if(adminRole.getMenuId()!=null){
+            i=adminRoleService.updateAdminRole(adminRole);
+        }else{
+            Admin admin = new Admin();
+            admin.setRoleId(adminRole.getId());
+            List<Map<String, Object>> mapList = adminService.selectAllAdmin(admin);
+            if(mapList!=null&&mapList.size()!=0){
+                i=-1;
+            }else{
+                i=adminRoleService.updateAdminRole(adminRole);
+            }
+        }
+        System.out.println(i);
         return i+"";
     }
 }

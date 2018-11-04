@@ -33,7 +33,7 @@ body{
   font-family: 'Montserrat', sans-serif;
    font-size: 100%;
    /* background: url(../images/startbg.jpg)no-repeat; */
-   background: url(../images/login3.jpg)no-repeat;
+   background: url(../images/logo.jpg)no-repeat;
        background-size: cover;
 }
 .login-form{

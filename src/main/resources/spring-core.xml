@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -11,20 +11,16 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
                            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+
+
 
     <!--使用注解开发-->
     <mvc:annotation-driven />
-
-    <mvc:default-servlet-handler/>
     <!--自动扫描：自动扫描com.heyang.ssm包下所有类的注解-->
     <context:component-scan base-package="com.carnoc.flight"/>
-    <!-- 定时任务 -->
-    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
-    <task:scheduler id="qbScheduler" />
-
-
-
+    <!--开启定时任务注解-->
+    <task:annotation-driven />
 
     <!--导入redis配置-->
     <!--<import resource="spring-redis.xml" />-->
@@ -35,18 +31,12 @@
     <!--导入redis配置-->
     <!--<import resource="spring-redis.xml"/>-->
 
-
-
-
-
-
-
     <!--配置数据源 从c3p0-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${drivers}"></property>
         <property name="jdbcUrl" value="${url}"></property>
         <property name="user" value="${user}"></property>
-        <!--<property name="password" value="${upwd}"></property>-->
+        <property name="password" value="${upwd}"></property>
         <property name="initialPoolSize" value="${initPoolSize}"></property>
         <property name="maxPoolSize" value="${maxPoolSizes}"></property>
     </bean>
@@ -69,7 +59,7 @@
         <!--将sqlSessionFactory注入com.zking.dao包的类中，dao包中的类直接使用sqlSessionFactory-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
         <property name="basePackage" value="com.carnoc.flight.userManager.dao,com.carnoc.flight.statisticAnalysis.dao
-                                          ,com.carnoc.flight.flightInformation.dao"></property>
+                                          ,com.carnoc.flight.flightInformation.dao,com.carnoc.flight.dataMaintenance.dao"></property>
     </bean>
 
 

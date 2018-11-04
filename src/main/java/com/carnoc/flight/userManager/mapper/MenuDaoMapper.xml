@@ -10,11 +10,12 @@
         <result property="name" column="name"></result>
         <result property="url" column="url"></result>
         <result property="menuCode" column="menu_code"></result>
+        <result property="icon" column="icon"></result>
     </resultMap>
 
     <!--根据用户名查询该用户对应的权限-->
     <select id="selectMenuByAdminUsername" parameterType="string" resultMap="MenuDaoBase">
-        select m.* from f_admin a,f_admin_role ar,f_menu m where a.role_id=ar.id and m.id in (select id from f_menu where position(concat(id) in ar.menu_id)!=0) and a.username=#{username}
+        select m.* from f_admin a,f_admin_role ar,f_menu m where a.role_id=ar.id and m.id in (select id from f_menu where FIND_IN_SET(id,ar.menu_id)) and a.username=#{username}
     </select>
 
     <!--根据权限父id查询该父id下所有的权限-->

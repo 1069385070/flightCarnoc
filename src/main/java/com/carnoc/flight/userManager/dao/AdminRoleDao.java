@@ -34,4 +34,14 @@ public interface AdminRoleDao {
     * @exception
     */
    public int addAdminRole(AdminRole adminRole);
+    
+   /**
+    * @Author Administrator
+    * @Description //TODO 根据条件修改用户组信息
+    * @Date 20:26 2018/10/29
+    * @Param [adminRole]
+    * @return int
+    * @exception
+    */
+   public int updateAdminRole(AdminRole adminRole);
 }

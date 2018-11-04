@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--接口注册-->
+<mapper namespace="com.carnoc.flight.dataMaintenance.dao.BackUpDao">
+    <!--添加一条备份日志记录-->
+    <insert id="addBackUp" parameterType="com.carnoc.flight.dataMaintenance.pojo.BackUp">
+        insert into f_backup values (null,#{name},#{addTime},#{backupState})
+    </insert>
+
+    <!--查询所有备份日志记录-->
+    <select id="selectAllBackUp" resultType="com.carnoc.flight.dataMaintenance.pojo.BackUp">
+        select * from f_backup
+    </select>
+
+    <!--还原数据库-->
+    <update id="restoreMysql" parameterType="com.carnoc.flight.dataMaintenance.pojo.BackUp">
+        update f_backup
+        <set>
+            <if test="backupState!=null">
+                backup_state=#{backupState}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+
+</mapper>

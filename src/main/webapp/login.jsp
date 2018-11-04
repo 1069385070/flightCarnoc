@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%>
 			<br/>
 			<br/>
 			<!-- <h1>登录</h1> -->
-			<h1>航班统计系统</h1>
+			<h1>南昌昌北国际机场航班统计系统</h1>
 			<div class="login-top">
 			<form action="/login.do" method="post" id="myform">
 				<div class="login-ic">
